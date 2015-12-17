@@ -1,0 +1,9 @@
+-----BANCO DE DUDAS-----
+---TEÓRICAS---
+* Utilidad del "tipo de visibilidad" protected a la
+  hora de usarlo en la herencia de clases.
+* Peligrosidad de devolver un objeto (Casilla) en el
+  método ejecutaMovimiento de Celula.
+---PRÁCTICAS---
+* Utilidad de sustituir el parametro de tipo casilla
+  por dos parametros de tipo int (f,c).
