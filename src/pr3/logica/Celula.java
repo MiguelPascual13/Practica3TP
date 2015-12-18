@@ -23,6 +23,9 @@ public abstract class Celula {
 
 	/*-----METODOS-----*/
 
+	/*---CONSTRUCTORAS---
+	 * Por lo que a mi respecta no aplica a esta clase, dado que una clase abstracta
+	 * no puede ser instanciada, sin embargo hay que mirar más sobre ese tema.*/
 	/*---GENERALES---*/
 	/**
 	 * Metodo en el que van encapsuladas las reglas de movimiento (asi como de
@@ -33,7 +36,8 @@ public abstract class Celula {
 	 *         NOTA: No se exactamente si tiene utilidad pasar una casilla aqui
 	 *         en lugar de las coordenadas por separado.
 	 */
-	public abstract Casilla ejecutaMovimiento(int f, int c, Superficie superficie);
+	public abstract Casilla ejecutaMovimiento(int f, int c,
+			Superficie superficie);
 
 	/*---AUXILIARES---
 	 * No aplica a esta clase*/
