@@ -1,8 +1,8 @@
 package pr3.logica;
 
 /**
- * Clase (MUTABLE) utilizada para determinar totalmente la posicion de una celula en el
- * mundo mediante un sistema de coordenadas cartesianas discretas
+ * Clase (MUTABLE) utilizada para determinar totalmente la posicion de una
+ * celula en el mundo mediante un sistema de coordenadas cartesianas discretas
  * (bidimiensional).
  */
 public class Casilla {
@@ -36,20 +36,32 @@ public class Casilla {
 	public int getColumna() {
 		return this.columna;
 	}
-	
+
 	/**
 	 * Mofifica la primera coordenada de la casilla.
-	 * @param fila Nuevo valor de la primera coordenada.
+	 * 
+	 * @param fila
+	 *            Nuevo valor de la primera coordenada.
 	 */
 	public void setFila(int fila) {
 		this.fila = fila;
 	}
-	
+
 	/**
 	 * Modifica la segunda coordenada de la casilla.
-	 * @param columna Nuevo valor de la segunda coordenada.
+	 * 
+	 * @param columna
+	 *            Nuevo valor de la segunda coordenada.
 	 */
 	public void setColumna(int columna) {
 		this.columna = columna;
+	}
+
+	/**
+	 * Imprime una casilla por pantalla con el formato clasico "tupla" de las
+	 * coordenadas caretessianas.
+	 */
+	public String toString() {
+		return "(" + this.fila + "," + this.columna + ")";
 	}
 }
