@@ -12,21 +12,19 @@ package pr3.logica;
  * hubiera.
  */
 public abstract class Celula {
-	/*-----ATRIBUTOS-----*/
-
-	/*
+	/**
 	 * A dia de hoy este atributo determina totalmente el tipo de celula. Si se
 	 * quieren añadir mas tipos de celula en el futuro se debe tener en cuenta
 	 * que este atributo dejara de ser determinante.
 	 */
 	protected boolean esComestible;
 
-	/*-----METODOS-----*/
+	/*
+	 * No aplica a esta clase especificar un construtor, dado que una clase
+	 * abstracta no puede ser instanciada, sin embargo hay que mirar más sobre
+	 * ese tema.
+	 */
 
-	/*---CONSTRUCTORAS---
-	 * Por lo que a mi respecta no aplica a esta clase, dado que una clase abstracta
-	 * no puede ser instanciada, sin embargo hay que mirar más sobre ese tema.*/
-	/*---GENERALES---*/
 	/**
 	 * Metodo en el que van encapsuladas las reglas de movimiento (asi como de
 	 * muerte y reproduccion en su caso).
@@ -36,19 +34,12 @@ public abstract class Celula {
 	 *         NOTA: No se exactamente si tiene utilidad pasar una casilla aqui
 	 *         en lugar de las coordenadas por separado.
 	 */
-	public abstract Casilla ejecutaMovimiento(int f, int c,
-			Superficie superficie);
+	public abstract Casilla ejecutaMovimiento(int f, int c, Superficie superficie);
 
-	/*---AUXILIARES---
-	 * No aplica a esta clase*/
-
-	/*---SOBREESCRITURAS---*/
 	/**
 	 * Pasa por pantalla el simbolo caracteristico de cada tipo de celula.
 	 */
 	public abstract String toString();
-
-	/*---GET---*/
 
 	/**
 	 * @return Devuelve la "comestibilidad" de la celula (booleano). NOTA: Es
@@ -56,7 +47,4 @@ public abstract class Celula {
 	 *         representar la comestibilidad.
 	 */
 	public abstract boolean esComestible();
-
-	/*---SET---
-	 * No aplica a esta clase*/
 }
