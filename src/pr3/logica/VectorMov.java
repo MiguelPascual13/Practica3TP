@@ -1,61 +1,48 @@
 package pr3.logica;
 
 /**
- * NOTA: Meter esta clase en un paquete aparte junto con la celula simple para
- * que esta clase no sea visible. Clase auxiliar. Se trata de un array que
- * guarda las posibles casillas a las que se puede mover una celula simple.
- * Contiene metodos para insertar nuevas posiciones candidatas.
+ * Clase que contiene todas las utilidades necesarias para manejar un array
+ * unidimiensional de casillas que represente las posiciones a las que una
+ * celula simple se podra mover.
+ *
  */
 public class VectorMov {
-	Casilla[] entorno;
-	private static final int MAX_ENTORNO = 8;
-	int contador;
+
+	private Casilla[] entorno;
+	private int contador;
+	private final int MAX_ENTORNO = 8;
 
 	/**
-	 * Constructora unica sin parametros.
+	 * Constructor inicializa un array de casillas de 8 posiciones.
 	 */
 	public VectorMov() {
-		this.entorno = new Casilla[MAX_ENTORNO];
-		this.contador = 0;
+		contador = 0;
+		entorno = new Casilla[MAX_ENTORNO];
+		vaciar();
 	}
 
 	/**
-	 * Inserta una casilla en la ultima posicion libre del array. ATENCION: No
-	 * se comprueban desbordamientos, esa es responsabilidad del llamante.
-	 * 
-	 * @param fila
-	 *            Primera coordenada de la casilla en cuestion.
-	 * @param columna
-	 *            Segunda coordenada de la casilla en cuestion.
+	 * Vacia el array.
 	 */
-	public void setCeldaSiguiente(int fila, int columna) {
-		this.entorno[contador++] = new Casilla(fila, columna);
+	private void vaciar() {
+		for (int i = 0; i < MAX_ENTORNO; i++) {
+			entorno[i] = null;
+		}
 	}
 
-	/**
-	 * @return Devuelve el contador del array.
-	 */
 	public int getContador() {
 		return this.contador;
 	}
 
-	/**
-	 * @param indice
-	 *            Indice del array
-	 * @return Devuelve la primera coordenada de la casilla en el indice
-	 *         indicado.
-	 */
 	public int getFila(int indice) {
 		return this.entorno[indice].getFila();
 	}
 
-	/**
-	 * @param indice
-	 *            Indice del array
-	 * @return Devuelve la segunda coordenada de la casilla en el indice
-	 *         indicado.
-	 */
 	public int getColumna(int indice) {
 		return this.entorno[indice].getColumna();
+	}
+
+	public void setCeldaSiguiente(Casilla celda) {
+		this.entorno[contador++] = celda;
 	}
 }

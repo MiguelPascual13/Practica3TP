@@ -1,123 +1,111 @@
 package pr3.logica;
 
-/**
- * Clase que sirve para manejar el array bidimensional que representa el mundo
- * celular. Sirve para consultar y modificar los datos de dicho array. Sin
- * embargo, esta clase no tiene conocimiento alguno sobre las "reglas de vida"
- * del mundo.
- */
 public class Superficie {
-	/*
-	 * Array bidimensional del celulas que conformaran la superficie del mundo
-	 * celular
-	 */
+
+	private int nf;
+	private int nc;
+
 	private Celula[][] tablero;
 
-	/* Estos atributos controlan la dimension del tablero */
-	private int filas;
-	private int columnas;
-
 	/**
-	 * Constructora (unica) cuyos parametros determinan la dimension del array
-	 * bidimensional del tablero-
+	 * Constructora que inicializa la superficie con el tamano indicado en los
+	 * parametros
 	 * 
-	 * @param filas
-	 *            Numero de filas del array.
-	 * @param columnas
-	 *            Numero de columnas del array.
+	 * @param nf
+	 *            numero de filas de la superficie
+	 * @param nc
+	 *            numero de columnas de la superfcie
 	 */
-	public Superficie(int filas, int columnas) {
-		this.filas = filas;
-		this.columnas = columnas;
-		tablero = new Celula[this.filas][this.columnas];
-		/*
-		 * Aunque esto ya lo hace java por defecto, lo haremos aquí también por
-		 * prudencia.
-		 */
-		this.vaciar();
+	public Superficie(int nf, int nc) {
+		this.nf = nf;
+		this.nc = nc;
+		tablero = new Celula[this.nf][this.nc];
+		vaciar();
 	}
 
 	/**
-	 * Inicializa a null todas las casillas del tablero.
+	 * Vacia la superfcie dejandola a null
 	 */
 	public void vaciar() {
-		for (int i = 0; i < this.filas; i++) {
-			for (int j = 0; j < this.columnas; j++) {
-				vaciarCasilla(i, j);
+		for (int i = 0; i < nf; i++) {
+			for (int j = 0; j < nc; j++) {
+				tablero[i][j] = null;
 			}
 		}
 	}
 
 	/**
-	 * Hace que la posicion indicada del tablero apunte a null.
+	 * dada una casilla de origen, se realizan los cambios adecuados en la
+	 * superficie para que esta se mueva segun sus reglas.
 	 * 
-	 * @param casilla
-	 *            Posicion en cuestion.
+	 * @param casilla casilla de origen
+	 * @return devuelve la casilla de destino, o null en caso de no moverse.
 	 */
-	public void vaciarCasilla(Casilla casilla) {
-		this.vaciarCasilla(casilla.getFila(), casilla.getColumna());
+	public Casilla ejecutaMovimiento(Casilla casilla) {
+		Casilla destino = this.tablero[casilla.getFila()][casilla.getColumna()].ejecutaMovimiento(casilla, this);
+		return destino;
 	}
 
-	/**
-	 * Hace que la posicion indicada del tablero apunte a null.
-	 * 
-	 * @param f
-	 *            Primera coordenada de la casilla.
-	 * @param c
-	 *            Segunda coordenada de la casilla.
-	 */
-	public void vaciarCasilla(int f, int c) {
-		this.tablero[f][c] = null;
-	}
-
-	/**
-	 * @return Devuelve el numero de filas del tablero.
-	 */
 	public int getFilas() {
-		return this.filas;
+		return this.nf;
 	}
 
-	/**
-	 * @return Devuelve el numero de columnas del tablero.
-	 */
 	public int getColumnas() {
-		return this.columnas;
+		return this.nc;
 	}
 
+	public boolean getComestibilidad(Casilla casilla) {
+		return tablero[casilla.getFila()][casilla.getColumna()].esComestible();
+	}
+	
 	/**
-	 * Funcion caracteristica del conjunto de las casillas vacias del tablero.
-	 * 
-	 * @param i
-	 *            Primera coordenada de la casilla.
-	 * @param j
-	 *            Segunda coordenada de la casilla.
-	 * @return Devuelve true si la casilla es vacia, false en caso contrario.
+	 * Devuelve un booleano indicando si la casilla se encuentra vacia o no
+	 * @param casilla casilla en cuestion
+	 * @return true si vacia, false si llena
 	 */
-	public boolean esVacia(int i, int j) {
+	public boolean esVacia(Casilla casilla) {
 		boolean vacia = false;
-		if (this.tablero[i][j] == null)
+		if (tablero[casilla.getFila()][casilla.getColumna()] == null)
 			vacia = true;
 		return vacia;
 	}
 	
 	/**
-	 * Inserta una celula dada en una casilla del tablero especificada.
-	 * ATENCION: No se encarga de comprobar que la posicion sea valida.
-	 * @param casilla Casilla en cuestion.
-	 * @param celula Celula en cuestion.
+	 * Vacia la casilla especificada por parametro
+	 * @param casilla casilla a vaciar
 	 */
-	public void insertarCelula(Casilla casilla, Celula celula) {
-		insertarCelula(casilla.getFila(), casilla.getColumna(), celula);
+	public void vaciarCasilla(Casilla casilla) {
+		this.tablero[casilla.getFila()][casilla.getColumna()] = null;
 	}
 	
 	/**
-	 * Inserta un a celula dada en la casilla del tablero especificada.
-	 * ATENCION: No se encarga de comporbar que la posicion sea valida.
-	 * @param f Fila de la casilla.
-	 * @param c Columna de la casilla.
-	 * @param celula Celula a Insertar
+	 * Echufa una celula en la caasilla determinada por parametro
+	 * @param casilla casilla en cuestion
+	 * @param celula celula en cuestion
 	 */
-	public void insertarCelula(int f, int c, Celula celula) {
-		this.tablero[f][c] = celula;
+	public void setCasilla(Casilla casilla, Celula celula) {
+		this.tablero[casilla.getFila()][casilla.getColumna()] = celula;
+	}
+
+	/**
+	 * System.out.println(superficie) >>>> matriz 3 x 3 con la informacion de la
+	 * superficie.
+	 */
+	public String toString() {
+		String superficie = "";
+		Casilla casilla = new Casilla(0, 0);
+		for (int i = 0; i < this.getFilas(); i++) {
+			for (int j = 0; j < this.getColumnas(); j++) {
+				casilla.setFila(i);
+				casilla.setColumna(j);
+				if (this.esVacia(casilla))
+					superficie += "-";
+				else
+					superficie += this.tablero[i][j].toString();
+				superficie += '\t';
+			}
+			superficie += '\n';
+		}
+		return superficie;
 	}
 }

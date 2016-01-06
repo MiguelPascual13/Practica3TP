@@ -1,115 +1,97 @@
 package pr3.logica;
 
 /**
- * Clase para representar a las celulas simples, un caso particular de celulas
- * que tienen el movimiento limitado a las casillas colindantes, se pueden
- * reproducir y son comestibles. También pueden morir por inactividad.
+ * Clase heredada de Celula que contiene las mismas funcionalidades de una
+ * celula general con las particularidades de una celula de tipo simple. Puede
+ * reproducirse, es comestible, puede morir por falta de ejercio,...
  */
 public class CelulaSimple extends Celula {
-
-	/*
-	 * "Constantes" vitales de la celula simple. Respectivamente indican: Cada
-	 * cuantos pasos se reproducirá la celula. Cuantos pasos puede estar la
-	 * celula sin moverse.
-	 */
-	private static final int PASOS_REPRODUCCION = 3;
-	private static final int MAX_PASOS_SIN_MOVER = 1;
-
-	/*
-	 * Estos atributos indican respectivamente: El tiempo que lleva "viva" la
-	 * celula. Los pasos que lleva la celula sin moverse desde la ultima vez que
-	 * lo hizo.
-	 */
+	/*-----ATRIBUTOS-----*/
+	private final int MAX_PASOS_SIN_MOVER = 3;
+	private final int PASOS_REPRODUCCION = 3;
 	private int pasosDados;
 	private int pasosSinMover;
 
+	/*-----CONSTRUCTORAS-----*/
+
 	/**
-	 * Constructora (unica) con parametros que inicializa la una celula simple
-	 * con los datos dados.
+	 * Constructora (unica), crea una celula simple coon ciertos pasos ya dados
+	 * y ciertos pasos sin mover.
 	 * 
 	 * @param pasosDados
-	 *            Unidades de tiempo que lleva viva la celula.
+	 *            Pasos que la celula ha permanecido viva en el tablero.
 	 * @param pasosSinMover
-	 *            Numero de pasos que ha estado la celula sin moverse desde la
-	 *            ultima vez que se movio.
+	 *            Pasos que la celula ha estado sin moverse desde el ultimo
+	 *            movimiento "efectivo que realizo".
 	 */
 	public CelulaSimple(int pasosDados, int pasosSinMover) {
-		esComestible = true; // Las celulas simples son comestibles.
 		this.pasosDados = pasosDados;
 		this.pasosSinMover = pasosSinMover;
+		esComestible = true;
 	}
 
-	/**
-	 * Ejecuta el movimiento sobre la superficie acorde con las normas de
-	 * movimiento de una celula simple.
-	 */
-	public Casilla ejecutaMovimiento(int f, int c, Superficie superficie) {
-		Casilla destino = null;
-
-		/* Proceso de seleccion de casillas candidatas */
-		VectorMov entorno = new VectorMov();
-		for (int i = f - 1; i <= f + 1; i++) {
-			for (int j = c - 1; j <= c + 1; j++) {
-				if (i >= 0 && i < superficie.getFilas()) {
-					if (j >= 0 && j < superficie.getColumnas()) {
-						if (superficie.esVacia(i, j)) {
-							entorno.setCeldaSiguiente(i, j);
-						}
-					}
-				}
-			}
-		}
-
-		/*
-		 * Pase lo que pase, ha transcurrido una unidad de tiempo.
-		 */
-		this.pasosDados++;
-		
-		/*Proceso de movimiento/no movimiento*/
-		Casilla origen = new Casilla(f, c);
-		if (entorno.getContador() > 0) {
-			int aleatorio = (int) (Math.random() * entorno.getContador());
-			int f_aleat = entorno.getFila(aleatorio);
-			int c_aleat = entorno.getColumna(aleatorio);
-			destino = new Casilla(f_aleat, c_aleat);
-			superficie.insertarCelula(f_aleat, c_aleat, this);
-			superficie.vaciarCasilla(f, c);
-			System.out.println("Movimiento de celula simple de " + origen + " a " + destino);
-			if (this.pasosDados % PASOS_REPRODUCCION == 0) {
-				CelulaSimple hija = new CelulaSimple(0, 0);
-				superficie.insertarCelula(f, c, hija);
-				System.out.println("Nace nueva celula simple en " + origen + " cuyo padre ha sido " + destino);
-			}
-		} else {
-			this.pasosSinMover++;
-			if (this.pasosSinMover >= MAX_PASOS_SIN_MOVER + 1) {
-				superficie.vaciarCasilla(f, c);
-				System.out.println("Muere la celula simple de la casilla " + origen + " por inactividad");
-			} else if (this.pasosDados % PASOS_REPRODUCCION == 0) {
-				System.out.println("Muere la celula simple de la casilla " + origen + " por irreproducibilidad");
-				superficie.vaciarCasilla(f, c);
-			}
-		}
-
-		return destino;
-	}
+	/*-----METODOS EN GENERAL-----*/
 
 	/**
-	 * A la hora de imprimir por pantalla la superficie del mundo, sera mas
-	 * sencillo dividir dicha funcionalidad. Este metodo devuelve el string
-	 * caracteristico de una celula simple.
+	 * System.out.println(simple) >>>> "X"
 	 */
 	public String toString() {
 		return "X";
 	}
 
 	/**
-	 * Devuelve la "comestibilidad" de la celula. En el caso de las celulas
-	 * simples siempre devuelve true. La gracia de este metodo es usarlo con
-	 * polimorfismo.
+	 * Mueve la celula aleatoriamente a alguna de sus casillas vecinas,
+	 * reprodudiendose cuando llegue el momento y muriendo cuando se den las
+	 * condiciones citadas en el enunciado de la practica.
 	 */
-	public boolean esComestible() {
-		return this.esComestible;
+	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
+
+		Casilla destino = null;
+		VectorMov entorno = new VectorMov();
+
+		for (int i = origen.getFila() - 1; i <= origen.getFila() + 1; i++) {
+			for (int j = origen.getColumna() - 1; j <= origen.getColumna() + 1; j++) {
+				Casilla posicionCandidata = new Casilla(i, j);
+				if (i >= 0 && i < superficie.getFilas()) {
+					if (j >= 0 && j < superficie.getColumnas()) {
+						if (superficie.esVacia(posicionCandidata)) {
+							entorno.setCeldaSiguiente(posicionCandidata);
+						}
+					}
+				}
+			}
+		}
+
+		this.pasosDados++;
+
+		if (entorno.getContador() > 0) {
+			int aleatorio = (int) (Math.random() * entorno.getContador());
+			int f = entorno.getFila(aleatorio);
+			int c = entorno.getColumna(aleatorio);
+			destino = new Casilla(f, c);
+			superficie.setCasilla(destino, this);
+			superficie.vaciarCasilla(origen);
+			System.out.println("Movimiento de celula simple de " + origen + " a " + destino);
+			if (this.pasosDados % PASOS_REPRODUCCION == 0) {
+				CelulaSimple hija = new CelulaSimple(0, 0);
+				superficie.setCasilla(origen, hija);
+				System.out.println("Nace nueva celula simple en " + origen + " cuyo padre ha sido " + destino);
+			}
+		} else {
+			this.pasosSinMover++;
+			if (this.pasosSinMover >= MAX_PASOS_SIN_MOVER + 1) {
+				superficie.vaciarCasilla(origen);
+				System.out.println("Muere la celula simple de la casilla " + origen + " por inactividad");
+			} else if (this.pasosDados % PASOS_REPRODUCCION == 0) {
+				System.out.println("Muere la celula simple de la casilla " + origen + " por irreproducibilidad");
+				superficie.vaciarCasilla(origen);
+			}
+		}
+
+		return destino;
 	}
 
+	public boolean esComestible() {
+		return esComestible;
+	}
 }

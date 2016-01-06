@@ -1,50 +1,41 @@
 package pr3.logica;
 
 /**
- * Clase Abstracta usada para representar los diferentes tipos de celulas que
- * pueden vivir en el mundo.
- * 
- * Es importante notar que una celula no sabe por si misma donde se encutra ni
- * si se ha movido o no.
- * 
- * Cada celula tiene ecapsuladas sus reglas de movimiento por el mundo.
- * Incluyendose dentro de esto las reglas de reproduccion y muerte si las
- * hubiera.
+ * Clase abstracta que representa a uno de los posibles tipos de entidades que
+ * pueden habitar el mundo. Se encarga de consultar y modificar (ATENCION: Clase
+ * Mutable) las caracteristicas fundamentales de una celula. También se encarga
+ * de la impresion de una celula por pantalla asi como de su movimiento a traves
+ * del tablero del mundo.
  */
 public abstract class Celula {
+
+	/*-----ATRIBUTOS-----*/
 	/**
-	 * A dia de hoy este atributo determina totalmente el tipo de celula. Si se
-	 * quieren añadir mas tipos de celula en el futuro se debe tener en cuenta
-	 * que este atributo dejara de ser determinante.
+	 * Atributo protegido (para poder ser heredado) que indica si la celula a la
+	 * que se refiere el objeto puede ser comida o no.
 	 */
 	protected boolean esComestible;
 
-	/*
-	 * No aplica a esta clase especificar un construtor, dado que una clase
-	 * abstracta no puede ser instanciada, sin embargo hay que mirar más sobre
-	 * ese tema.
-	 */
-
-	/**
-	 * Metodo en el que van encapsuladas las reglas de movimiento (asi como de
-	 * muerte y reproduccion en su caso).
-	 * 
-	 * @return Devuelve la casilla del mundo a la que se movio la celula.
-	 * 
-	 *         NOTA: No se exactamente si tiene utilidad pasar una casilla aqui
-	 *         en lugar de las coordenadas por separado.
-	 */
-	public abstract Casilla ejecutaMovimiento(int f, int c, Superficie superficie);
-
-	/**
-	 * Pasa por pantalla el simbolo caracteristico de cada tipo de celula.
-	 */
+	/*-----METODOS EN GENERAL-----*/
 	public abstract String toString();
 
 	/**
-	 * @return Devuelve la "comestibilidad" de la celula (booleano). NOTA: Es
-	 *         posible que en el futuro se requiera de un tipo mas complejo para
-	 *         representar la comestibilidad.
+	 * Mueve la celula por el tablero realizando en la tarea todo lo que ello
+	 * conlleve, ya sea la muerte de la celula en cuestion, la muerte de otras
+	 * celulas o bien el nacimiento de nuevas celulas.
+	 * 
+	 * @param casilla
+	 *            casilla actual de la celula.
+	 * @param superficie
+	 *            tablero sobre el que las celulas se moveran.
+	 * @return casilla a la que la celula se movio, en caso de no moverse
+	 *         devolvera el puntero nulo.
+	 */
+	public abstract Casilla ejecutaMovimiento(Casilla casilla, Superficie superficie);
+
+	/*-----METODOS GET-----*/
+	/**
+	 * @return devuelve la "comestibilidad" de la celula.
 	 */
 	public abstract boolean esComestible();
 }

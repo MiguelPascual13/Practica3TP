@@ -1,67 +1,76 @@
 package pr3.logica;
 
 /**
- * Clase (MUTABLE) utilizada para determinar totalmente la posicion de una
- * celula en el mundo mediante un sistema de coordenadas cartesianas discretas
- * (bidimiensional).
+ * Clase con todas las utilidades necesarias para consultar, modificar
+ * (ATENCION: Clase Mutable) e imprimir por pantalla coordenadas cartesianas de
+ * dos componentes.
  */
 public class Casilla {
-	private int fila;
-	private int columna;
 
+	/*-----ATRIBUTOS-----*/
+	private int f;
+	private int c;
+
+	/*-----METODOS-----*/
+
+	/*-----CONSTRUCTORAS-----*/
 	/**
-	 * Constructora (unica) que asigna las coordenadas especificadas por
-	 * parametro.
+	 * Constructora (unica) con parametros para inicializar los atributos de la
+	 * clase.
 	 * 
-	 * @param fila
-	 *            Primera coordenada.
-	 * @param columna
-	 *            Segunda coordena.
+	 * @param f
+	 *            fila de la casilla.
+	 * @param c
+	 *            columna de la casilla.
 	 */
-	public Casilla(int fila, int columna) {
-		this.fila = fila;
-		this.columna = columna;
+	public Casilla(int f, int c) {
+		this.f = f;
+		this.c = c;
 	}
 
+	/*-----METODOS EN GENERAL-----*/
 	/**
-	 * @return Devuelve la primera coordenada de la casilla.
-	 */
-	public int getFila() {
-		return this.fila;
-	}
-
-	/**
-	 * @return Devuelve la segunda coordenada de la casilla.
-	 */
-	public int getColumna() {
-		return this.columna;
-	}
-
-	/**
-	 * Mofifica la primera coordenada de la casilla.
-	 * 
-	 * @param fila
-	 *            Nuevo valor de la primera coordenada.
-	 */
-	public void setFila(int fila) {
-		this.fila = fila;
-	}
-
-	/**
-	 * Modifica la segunda coordenada de la casilla.
-	 * 
-	 * @param columna
-	 *            Nuevo valor de la segunda coordenada.
-	 */
-	public void setColumna(int columna) {
-		this.columna = columna;
-	}
-
-	/**
-	 * Imprime una casilla por pantalla con el formato clasico "tupla" de las
-	 * coordenadas caretessianas.
+	 * System.out.println(casilla) >>>> (fila, columna)
 	 */
 	public String toString() {
-		return "(" + this.fila + "," + this.columna + ")";
+		return "(" + this.f + "," + this.c + ")";
+	}
+
+	/*-----METODOS GET-----*/
+
+	/**
+	 * @return devuelve la fila de la casilla.
+	 */
+	public int getFila() {
+		return this.f;
+	}
+
+	/**
+	 * @return devuelve la columna de la casilla.
+	 */
+	public int getColumna() {
+		return this.c;
+	}
+
+	/*-----METODOS SET-----*/
+
+	/**
+	 * Cambia la fila de la casilla.
+	 * 
+	 * @param f
+	 *            nueva fila de la casilla.
+	 */
+	public void setFila(int f) {
+		this.f = f;
+	}
+
+	/**
+	 * Cambia la columna de la casilla.
+	 * 
+	 * @param c
+	 *            nueva columna de la casilla.
+	 */
+	public void setColumna(int c) {
+		this.c = c;
 	}
 }
