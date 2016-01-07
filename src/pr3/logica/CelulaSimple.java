@@ -1,5 +1,9 @@
 package pr3.logica;
 
+import java.io.FileReader;
+
+import pr3.excepciones.IndicesFueraDeRango;
+
 public class CelulaSimple implements Celula {
 
 	private final int MAX_PASOS_SIN_MOVER = 3;
@@ -11,26 +15,27 @@ public class CelulaSimple implements Celula {
 	public CelulaSimple(int pasosDados, int pasosSinMover) {
 		this.pasosDados = pasosDados;
 		this.pasosSinMover = pasosSinMover;
-		esComestible = true;
+		this.esComestible = true;
 	}
-
+	
+	public CelulaSimple()
+	{
+		this.pasosDados = 0;
+		this.pasosSinMover = 0;
+		this.esComestible = true;
+	}
 	public String toString() {
 		return "X";
 	}
 
-	public boolean cargar() {
-		return false;
-	}
-
-	public boolean guardar() {
-		return false;
+	public void guardar() {
 	}
 
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 
 		Casilla destino = null;
 		VectorMov entorno = new VectorMov();
-
+		try{
 		for (int i = origen.getFila() - 1; i <= origen.getFila() + 1; i++) {
 			for (int j = origen.getColumna() - 1; j <= origen.getColumna() + 1; j++) {
 				Casilla posicionCandidata = new Casilla(i, j);
@@ -55,7 +60,7 @@ public class CelulaSimple implements Celula {
 			superficie.vaciarCasilla(origen);
 			System.out.println("Movimiento de celula simple de " + origen + " a " + destino);
 			if (this.pasosDados % PASOS_REPRODUCCION == 0) {
-				CelulaSimple hija = new CelulaSimple(0, 0);
+				CelulaSimple hija = new CelulaSimple();
 				superficie.setCasilla(origen, hija);
 				System.out.println("Nace nueva celula simple en " + origen + " cuyo padre ha sido " + destino);
 			}
@@ -69,11 +74,20 @@ public class CelulaSimple implements Celula {
 				superficie.vaciarCasilla(origen);
 			}
 		}
-
+		}catch(IndicesFueraDeRango e)
+		{
+			//Las excepciones no se dan Nunca.
+		}
 		return destino;
 	}
 
 	public boolean esComestible() {
 		return esComestible;
+	}
+
+	@Override
+	public void cargar(FileReader entrada) {
+		// TODO Auto-generated method stub
+		
 	}
 }

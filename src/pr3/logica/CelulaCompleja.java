@@ -1,5 +1,9 @@
 package pr3.logica;
 
+import java.io.FileReader;
+
+import pr3.excepciones.IndicesFueraDeRango;
+
 public class CelulaCompleja implements Celula {
 	private final int MAX_COMIDAS = 3;
 	private int celulasComidas;
@@ -9,20 +13,24 @@ public class CelulaCompleja implements Celula {
 		this.celulasComidas = celulasComidas;
 	}
 
+	public CelulaCompleja() {
+		this.celulasComidas = 0;
+	}
+
 	public String toString() {
 		return "*";
 	}
 
-	public boolean cargar() {
-		return false;
+	public void cargar(FileReader entrada) {
+
 	}
 
-	public boolean guardar() {
-		return false;
+	public void guardar() {
 	}
 
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 		Casilla destino = null;
+		try{
 		int fAleatoria = (int) (Math.random() * superficie.getFilas());
 		int cAleatoria = (int) (Math.random() * superficie.getColumnas());
 		destino = new Casilla(fAleatoria, cAleatoria);
@@ -44,6 +52,10 @@ public class CelulaCompleja implements Celula {
 					superficie.vaciarCasilla(destino);
 				}
 			}
+		}
+		}catch(IndicesFueraDeRango e)
+		{
+			//La excepción no se puede dar.
 		}
 		return destino;
 	}

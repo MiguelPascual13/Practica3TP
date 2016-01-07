@@ -1,6 +1,8 @@
 package pr3.control.comandos;
 
 import pr3.control.Controlador;
+import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 
 public class EliminarCelula implements Comando {
@@ -17,10 +19,19 @@ public class EliminarCelula implements Comando {
 
 	public void ejecuta(Controlador controlador) {
 		Casilla casilla = new Casilla(this.f, this.c);
-		if (!controlador.eliminarCelula(casilla))
-			System.out.println("ERROR: Debe ser una casilla ocupada");
-		else
-			System.out.println("Eliminando la celula de " + casilla + "...");
+		try{
+		controlador.eliminarCelula(casilla);
+		System.out.println("Eliminando la celula de " + casilla + "...");
+		}
+		catch(IndicesFueraDeRango e1)
+		{
+			System.out.println("ERROR: Índices Fuera de Rango");
+		}
+		catch(PosicionVacia e2)
+		{
+			System.out.println("ERROR: Posicion Vacia");
+		}
+			
 	}
 
 	public Comando parsea(String[] cadenaComando) {

@@ -7,3 +7,8 @@
 ---PRÁCTICAS---
 * Utilidad de sustituir el parametro de tipo casilla
   por dos parametros de tipo int (f,c).
+* Captura de una excepción del tipo NullPointer en
+  realizaSimulación o dejarlo como el if-else de la
+  práctica 2. (Por el momento lo hacemos con captura
+  de excepciones ya que el enunciado de la práctica así
+  lo especifica).

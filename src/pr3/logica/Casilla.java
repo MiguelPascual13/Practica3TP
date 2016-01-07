@@ -9,10 +9,6 @@ public class Casilla {
 		this.columna = columna;
 	}
 
-	/**
-	 * Devuelve un String con las coordenadas en formato (f,c). No incluye salto
-	 * de linea.
-	 */
 	public String toString() {
 		return "(" + this.fila + "," + this.columna + ")";
 	}

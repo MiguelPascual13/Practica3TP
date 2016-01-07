@@ -3,7 +3,7 @@ package pr3;
 import java.util.Scanner;
 
 import pr3.control.Controlador;
-import pr3.logica.MundoSimple;
+import pr3.mundo.MundoSimple;
 
 public class Main {
 	public static void main(String[] args) {
