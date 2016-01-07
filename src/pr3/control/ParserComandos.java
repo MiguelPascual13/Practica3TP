@@ -6,7 +6,7 @@ import pr3.control.comandos.*;
  * Clase encargada de parsear los comandos introducidos por el usuario.
  */
 public class ParserComandos {
-	private static Comando[] comandos = { new Ayuda(), new CrearCompleja(), new CrearSimple(), new EliminarCelula(),
+	private static Comando[] comandos = { new Ayuda(), new CrearCelula(), new EliminarCelula(),
 			new Iniciar(), new Paso(), new Salir(), new Vaciar() };
 
 	/**

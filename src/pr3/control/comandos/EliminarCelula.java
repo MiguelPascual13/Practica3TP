@@ -1,9 +1,9 @@
 package pr3.control.comandos;
 
+import pr3.control.Controlador;
 import pr3.logica.Casilla;
-import pr3.logica.Mundo;
 
-public class EliminarCelula extends Comando {
+public class EliminarCelula implements Comando {
 	private int f;
 	private int c;
 
@@ -15,9 +15,9 @@ public class EliminarCelula extends Comando {
 		this.c = 0;
 	}
 
-	public void ejecuta(Mundo mundo) {
+	public void ejecuta(Controlador controlador) {
 		Casilla casilla = new Casilla(this.f, this.c);
-		if (!mundo.eliminarCelula(casilla))
+		if (!controlador.eliminarCelula(casilla))
 			System.out.println("ERROR: Debe ser una casilla ocupada");
 		else
 			System.out.println("Eliminando la celula de " + casilla + "...");

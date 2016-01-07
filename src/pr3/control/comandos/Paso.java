@@ -1,12 +1,12 @@
 package pr3.control.comandos;
 
-import pr3.logica.Mundo;
+import pr3.control.Controlador;
 
-public class Paso extends Comando {
+public class Paso implements Comando {
 
-	public void ejecuta(Mundo mundo) {
+	public void ejecuta(Controlador controlador) {
 		System.out.println("Evolucionando...");
-		mundo.evoluciona();
+		controlador.evoluciona();
 	}
 
 	public Comando parsea(String[] cadenaComando) {

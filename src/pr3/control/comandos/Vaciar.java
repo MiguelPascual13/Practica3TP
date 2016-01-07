@@ -1,12 +1,12 @@
 package pr3.control.comandos;
 
-import pr3.logica.Mundo;
+import pr3.control.Controlador;
 
-public class Vaciar extends Comando {
+public class Vaciar implements Comando {
 
-	public void ejecuta(Mundo mundo) {
+	public void ejecuta(Controlador controlador) {
 		System.out.println("Vaciando mundo...");
-		mundo.vaciar();
+		controlador.vaciar();
 	}
 
 	public Comando parsea(String[] cadenaComando) {

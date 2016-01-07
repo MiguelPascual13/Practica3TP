@@ -1,76 +1,35 @@
 package pr3.logica;
 
-/**
- * Clase con todas las utilidades necesarias para consultar, modificar
- * (ATENCION: Clase Mutable) e imprimir por pantalla coordenadas cartesianas de
- * dos componentes.
- */
 public class Casilla {
-
-	/*-----ATRIBUTOS-----*/
-	private int f;
-	private int c;
-
-	/*-----METODOS-----*/
-
-	/*-----CONSTRUCTORAS-----*/
-	/**
-	 * Constructora (unica) con parametros para inicializar los atributos de la
-	 * clase.
-	 * 
-	 * @param f
-	 *            fila de la casilla.
-	 * @param c
-	 *            columna de la casilla.
-	 */
-	public Casilla(int f, int c) {
-		this.f = f;
-		this.c = c;
+	private int fila;
+	private int columna;
+	
+	public Casilla(int fila, int columna) {
+		this.fila = fila;
+		this.columna = columna;
 	}
 
-	/*-----METODOS EN GENERAL-----*/
 	/**
-	 * System.out.println(casilla) >>>> (fila, columna)
+	 * Devuelve un String con las coordenadas en formato (f,c). No incluye salto
+	 * de linea.
 	 */
 	public String toString() {
-		return "(" + this.f + "," + this.c + ")";
+		return "(" + this.fila + "," + this.columna + ")";
 	}
 
-	/*-----METODOS GET-----*/
-
-	/**
-	 * @return devuelve la fila de la casilla.
-	 */
 	public int getFila() {
-		return this.f;
+		return this.fila;
 	}
 
-	/**
-	 * @return devuelve la columna de la casilla.
-	 */
 	public int getColumna() {
-		return this.c;
+		return this.columna;
 	}
 
-	/*-----METODOS SET-----*/
-
-	/**
-	 * Cambia la fila de la casilla.
-	 * 
-	 * @param f
-	 *            nueva fila de la casilla.
-	 */
-	public void setFila(int f) {
-		this.f = f;
+	public void setFila(int fila) {
+		this.fila = fila;
 	}
 
-	/**
-	 * Cambia la columna de la casilla.
-	 * 
-	 * @param c
-	 *            nueva columna de la casilla.
-	 */
-	public void setColumna(int c) {
-		this.c = c;
+	public void setColumna(int columna) {
+		this.columna = columna;
 	}
 }

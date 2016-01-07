@@ -1,49 +1,31 @@
 package pr3.logica;
 
-/**
- * Clase heredada de Celula que contiene las mismas funcionalidades de una
- * celula general con las particularidades de una celula de tipo simple. Puede
- * reproducirse, es comestible, puede morir por falta de ejercio,...
- */
-public class CelulaSimple extends Celula {
-	/*-----ATRIBUTOS-----*/
+public class CelulaSimple implements Celula {
+
 	private final int MAX_PASOS_SIN_MOVER = 3;
 	private final int PASOS_REPRODUCCION = 3;
 	private int pasosDados;
 	private int pasosSinMover;
+	private boolean esComestible;
 
-	/*-----CONSTRUCTORAS-----*/
-
-	/**
-	 * Constructora (unica), crea una celula simple coon ciertos pasos ya dados
-	 * y ciertos pasos sin mover.
-	 * 
-	 * @param pasosDados
-	 *            Pasos que la celula ha permanecido viva en el tablero.
-	 * @param pasosSinMover
-	 *            Pasos que la celula ha estado sin moverse desde el ultimo
-	 *            movimiento "efectivo que realizo".
-	 */
 	public CelulaSimple(int pasosDados, int pasosSinMover) {
 		this.pasosDados = pasosDados;
 		this.pasosSinMover = pasosSinMover;
 		esComestible = true;
 	}
 
-	/*-----METODOS EN GENERAL-----*/
-
-	/**
-	 * System.out.println(simple) >>>> "X"
-	 */
 	public String toString() {
 		return "X";
 	}
 
-	/**
-	 * Mueve la celula aleatoriamente a alguna de sus casillas vecinas,
-	 * reprodudiendose cuando llegue el momento y muriendo cuando se den las
-	 * condiciones citadas en el enunciado de la practica.
-	 */
+	public boolean cargar() {
+		return false;
+	}
+
+	public boolean guardar() {
+		return false;
+	}
+
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 
 		Casilla destino = null;

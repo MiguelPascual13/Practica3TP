@@ -1,12 +1,12 @@
 package pr3.control.comandos;
 
-import pr3.logica.Mundo;
+import pr3.control.Controlador;
 
-public class Iniciar extends Comando {
+public class Iniciar implements Comando {
 
-	public void ejecuta(Mundo mundo) {
+	public void ejecuta(Controlador controlador) {
 		System.out.println("Inicializando mundo...");
-		mundo.inicializar();
+		controlador.inicializar();
 	}
 
 	public Comando parsea(String[] cadenaComando) {

@@ -1,11 +1,11 @@
 package pr3.control.comandos;
 
-import pr3.logica.Mundo;
+import pr3.control.Controlador;
 
-public class Salir extends Comando {
-	public void ejecuta(Mundo mundo) {
+public class Salir implements Comando {
+	public void ejecuta(Controlador controlador) {
 		System.out.println("Finalizando simulacion...");
-		mundo.setSimulacionTerminada(true);
+		controlador.setSimulacionTerminada(true);
 	}
 
 	public Comando parsea(String[] cadenaComando) {

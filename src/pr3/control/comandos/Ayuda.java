@@ -1,17 +1,10 @@
 package pr3.control.comandos;
 
+import pr3.control.Controlador;
 import pr3.control.ParserComandos;
-import pr3.logica.Mundo;
 
-/**
- * Comando de ayuda.
- */
-public class Ayuda extends Comando {
-	/**
-	 * Muestra por tantalla los textos de ayuda de todos los comandos
-	 * existentes.
-	 */
-	public void ejecuta(Mundo mundo) {
+public class Ayuda implements Comando {
+	public void ejecuta(Controlador controlador) {
 		System.out.println(ParserComandos.ayudaComandos());
 	}
 

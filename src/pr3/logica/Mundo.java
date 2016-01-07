@@ -1,52 +1,38 @@
 package pr3.logica;
 
-/**
- * Clase que auna el movimiento de todos los seres vivos de la superficie.
- */
-public class Mundo {
-	/*-----ATRIBUTOS-----*/
+public abstract class Mundo {
+	private int filas;
+	private int columnas;
 	private final int NUM_CEL_SIMPLES = 3;
 	private final int NUM_CEL_COMPLEJAS = 2;
-	private boolean simulacionTerminada = false;
 	private Superficie superficie;
 
-	/*-----METODOS-----*/
-	/*-----CONSTRUCTORAS-----*/
-	/**
-	 * Constructora (unica), inicializa su superfice.
-	 * 
-	 * @param nf
-	 *            dimension de filas de la superficie.
-	 * @param nc
-	 *            dimension de columnas de la superfice.
-	 */
-	public Mundo(int nf, int nc) {
-		superficie = new Superficie(nf, nc);
-		this.inicializar();
+	
+	public Mundo(){
+		this.filas = 0;
+		this.columnas = 0;
+		this.superficie = null;
+	}
+	
+	public Mundo(int filas, int columnas) {
+		this.filas = filas;
+		this.columnas = columnas;
+		superficie = new Superficie(this.filas, this.columnas);
+		this.inicializaMundo();
 	}
 
-	/*-----METODOS EN GENERAL-----*/
-	/**
-	 * Inicializa la superficie del mundo, regandolo con todos los seres que los
-	 * habitaran.
-	 */
-	public void inicializar() {
-		superficie.vaciar();
-		Celula celulaSimple = new CelulaSimple(0, 0);
-		Celula celulaCompleja = new CelulaCompleja(0);
-		inicializarSuperficie(NUM_CEL_SIMPLES, celulaSimple);
-		inicializarSuperficie(NUM_CEL_COMPLEJAS, celulaCompleja);
+	public abstract void inicializaMundo();
+	
+	public boolean guardar()
+	{
+		return false;
 	}
-
-	/**
-	 * Inicializa la superficie regandola con un numero determinado de celulas
-	 * identicas
-	 * 
-	 * @param numCelulas
-	 *            numero de celulas que se insertaran
-	 * @param celula
-	 *            ceula que se insertara
-	 */
+	
+	public boolean cargar()
+	{
+		return true;
+	}
+	
 	public void inicializarSuperficie(int numCelulas, Celula celula) {
 		Casilla casilla = new Casilla(0, 0);
 		for (int i = 0; i < numCelulas; i++) {
@@ -168,24 +154,5 @@ public class Mundo {
 				movidas[i][j] = false;
 			}
 		}
-	}
-
-	/*-----METODOS GET-----*/
-	/**
-	 * @return Devuelve si la simulacion ha terminado o no.
-	 */
-	public boolean getSimulacionTerminada() {
-		return simulacionTerminada;
-	}
-
-	/*-----METODOS SET-----*/
-	/**
-	 * Decide si la simulacion ha terminado o no
-	 * 
-	 * @param simulacionTerminada
-	 *            booleano que determina la finalizacion o no de la simulacion
-	 */
-	public void setSimulacionTerminada(boolean simulacionTerminada) {
-		this.simulacionTerminada = simulacionTerminada;
 	}
 }
