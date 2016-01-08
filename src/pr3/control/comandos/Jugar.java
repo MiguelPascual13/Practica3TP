@@ -1,6 +1,7 @@
 package pr3.control.comandos;
 
 import pr3.control.Controlador;
+import pr3.excepciones.ErrorComando;
 import pr3.excepciones.ErrorDeInicializacion;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.mundo.Mundo;
@@ -35,7 +36,7 @@ public class Jugar implements Comando {
 		}
 	}
 
-	public Comando parsea(String[] cadenaComando) {
+	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 5) {
 			if (cadenaComando[0].equals("JUGAR")) {
@@ -49,6 +50,7 @@ public class Jugar implements Comando {
 					}
 				} catch (FormatoNumericoIncorrecto e) {
 					System.out.println(e);
+					throw new ErrorComando();
 				}
 			}
 		}

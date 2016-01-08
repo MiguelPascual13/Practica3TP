@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import pr3.control.comandos.Comando;
+import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
@@ -30,10 +31,12 @@ public class Controlador {
 		System.out.println(mundo);
 		String[] words = captarEntrada();
 		while (!this.simulacionTerminada) {
-			Comando comando = ParserComandos.parseaComando(words);
 			try {
+				Comando comando = ParserComandos.parseaComando(words);
 				comando.ejecuta(this);
-			} catch (NullPointerException e) {
+			} catch (ErrorComando e1) {
+
+			} catch (NullPointerException e2) {
 				System.out.println("ERROR: Comando no existente.");
 			}
 			if (!this.simulacionTerminada) {

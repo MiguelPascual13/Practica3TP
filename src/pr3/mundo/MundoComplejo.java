@@ -11,7 +11,7 @@ public class MundoComplejo extends Mundo {
 
 	public MundoComplejo(int filas, int columnas, int simples, int complejas) throws ErrorDeInicializacion {
 		super(filas, columnas);
-		if(filas*columnas < simples+complejas)
+		if (filas * columnas < simples + complejas)
 			throw new ErrorDeInicializacion();
 		this.simples = simples;
 		this.complejas = complejas;

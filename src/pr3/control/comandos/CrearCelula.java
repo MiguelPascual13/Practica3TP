@@ -1,6 +1,7 @@
 package pr3.control.comandos;
 
 import pr3.control.Controlador;
+import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
@@ -25,7 +26,7 @@ public class CrearCelula implements Comando {
 			this.ejecutaComplejo(controlador);
 	}
 
-	public Comando parsea(String[] cadenaComando) {
+	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {
 			if (cadenaComando[0].equals("CREARCELULA")) {
@@ -34,6 +35,7 @@ public class CrearCelula implements Comando {
 					comando = this;
 				} catch (Exception e) {
 					System.out.println(e);
+					throw new ErrorComando();
 				}
 			}
 		}

@@ -1,6 +1,17 @@
 package pr3.control;
 
-import pr3.control.comandos.*;
+import pr3.control.comandos.Ayuda;
+import pr3.control.comandos.Cargar;
+import pr3.control.comandos.Comando;
+import pr3.control.comandos.CrearCelula;
+import pr3.control.comandos.EliminarCelula;
+import pr3.control.comandos.Guardar;
+import pr3.control.comandos.Iniciar;
+import pr3.control.comandos.Jugar;
+import pr3.control.comandos.Paso;
+import pr3.control.comandos.Salir;
+import pr3.control.comandos.Vaciar;
+import pr3.excepciones.ErrorComando;
 
 public class ParserComandos {
 	private static Comando[] comandos = { new Ayuda(), new Cargar(), new CrearCelula(), new EliminarCelula(),
@@ -14,7 +25,7 @@ public class ParserComandos {
 		return ayuda;
 	}
 
-	static public Comando parseaComando(String[] cadenas) {
+	static public Comando parseaComando(String[] cadenas) throws ErrorComando {
 		Comando comando = null;
 		boolean encontrado = false;
 		int i = 0;

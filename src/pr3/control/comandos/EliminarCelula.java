@@ -1,6 +1,7 @@
 package pr3.control.comandos;
 
 import pr3.control.Controlador;
+import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
@@ -24,7 +25,7 @@ public class EliminarCelula implements Comando {
 		}
 	}
 
-	public Comando parsea(String[] cadenaComando) {
+	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {
 			if (cadenaComando[0].equals("ELIMINARCELULA")) {
@@ -33,6 +34,7 @@ public class EliminarCelula implements Comando {
 					comando = this;
 				} catch (FormatoNumericoIncorrecto e) {
 					System.out.println(e);
+					throw new ErrorComando();
 				}
 			}
 		}
@@ -40,7 +42,7 @@ public class EliminarCelula implements Comando {
 	}
 
 	public String textoAyuda() {
-		return "ELIMINAR f c:\t\tElimina la Celula de la casilla especificada por parametro.\n";
+		return "ELIMINARCELULA f c:\tElimina la Celula de la casilla especificada por parametro.\n";
 	}
 
 	private void parseaParametros(String[] cadenaComando) throws FormatoNumericoIncorrecto {
