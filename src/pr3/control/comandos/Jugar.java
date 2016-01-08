@@ -66,6 +66,7 @@ public class Jugar implements Comando {
 			this.filas = Integer.parseInt(cadenaComando[2]);
 			this.columnas = Integer.parseInt(cadenaComando[3]);
 			this.simples = Integer.parseInt(cadenaComando[4]);
+			this.complejas = -1;
 			if (this.filas <= 0 || this.columnas <= 0 || this.simples < 0)
 				throw new FormatoNumericoIncorrecto();
 		} catch (Exception e) {
