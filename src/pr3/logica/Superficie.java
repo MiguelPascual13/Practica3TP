@@ -1,6 +1,7 @@
 package pr3.logica;
 
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.logica.celula.Celula;
 
 public class Superficie {
 

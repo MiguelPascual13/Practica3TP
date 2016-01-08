@@ -5,9 +5,9 @@ import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
-import pr3.logica.Celula;
-import pr3.logica.CelulaCompleja;
-import pr3.logica.CelulaSimple;
+import pr3.logica.celula.Celula;
+import pr3.logica.celula.CelulaCompleja;
+import pr3.logica.celula.CelulaSimple;
 
 public class CrearCelula implements Comando {
 

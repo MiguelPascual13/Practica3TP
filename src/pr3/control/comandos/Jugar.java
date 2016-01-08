@@ -4,9 +4,9 @@ import pr3.control.Controlador;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.ErrorDeInicializacion;
 import pr3.excepciones.FormatoNumericoIncorrecto;
-import pr3.mundo.Mundo;
-import pr3.mundo.MundoComplejo;
-import pr3.mundo.MundoSimple;
+import pr3.logica.mundo.Mundo;
+import pr3.logica.mundo.MundoComplejo;
+import pr3.logica.mundo.MundoSimple;
 
 public class Jugar implements Comando {
 

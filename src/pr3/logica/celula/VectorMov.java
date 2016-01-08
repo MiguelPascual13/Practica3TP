@@ -1,4 +1,6 @@
-package pr3.logica;
+package pr3.logica.celula;
+
+import pr3.logica.Casilla;
 
 public class VectorMov {
 

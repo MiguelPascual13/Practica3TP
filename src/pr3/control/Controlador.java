@@ -8,9 +8,9 @@ import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
-import pr3.logica.Celula;
-import pr3.mundo.Mundo;
-import pr3.mundo.MundoSimple;
+import pr3.logica.celula.Celula;
+import pr3.logica.mundo.Mundo;
+import pr3.logica.mundo.MundoSimple;
 
 public class Controlador {
 	private Mundo mundo;

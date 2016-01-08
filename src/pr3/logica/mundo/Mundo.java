@@ -1,9 +1,9 @@
-package pr3.mundo;
+package pr3.logica.mundo;
 
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
-import pr3.logica.Celula;
 import pr3.logica.Superficie;
+import pr3.logica.celula.Celula;
 
 public abstract class Mundo {
 	protected int filas;

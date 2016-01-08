@@ -1,8 +1,10 @@
-package pr3.logica;
+package pr3.logica.celula;
 
 import java.io.FileReader;
 
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.logica.Casilla;
+import pr3.logica.Superficie;
 
 public class CelulaSimple implements Celula {
 
