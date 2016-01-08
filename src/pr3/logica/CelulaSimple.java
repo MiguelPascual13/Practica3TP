@@ -27,6 +27,10 @@ public class CelulaSimple implements Celula {
 	public String toString() {
 		return "X";
 	}
+	public void cargar(FileReader entrada) {
+	
+		
+	}
 
 	public void guardar() {
 	}
@@ -83,11 +87,5 @@ public class CelulaSimple implements Celula {
 
 	public boolean esComestible() {
 		return esComestible;
-	}
-
-	@Override
-	public void cargar(FileReader entrada) {
-		// TODO Auto-generated method stub
-		
 	}
 }
