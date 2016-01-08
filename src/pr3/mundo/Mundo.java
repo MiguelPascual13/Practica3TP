@@ -1,8 +1,6 @@
 package pr3.mundo;
 
 import pr3.excepciones.IndicesFueraDeRango;
-import pr3.excepciones.PosicionNoVacia;
-import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 import pr3.logica.Celula;
 import pr3.logica.Superficie;
@@ -42,26 +40,30 @@ public abstract class Mundo {
 		return superficie.toString();
 	}
 
-	public void crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango, PosicionNoVacia {
-		crearCelula(casilla.getFila(), casilla.getColumna(), celula);
+	public boolean crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
+		return this.crearCelula(casilla.getFila(), casilla.getColumna(), celula);
 	}
 
-	public void crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango, PosicionNoVacia {
+	public boolean crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
+		boolean sinErrores = true;
 		if (superficie.esVacia(fila, columna)) {
 			superficie.setCasilla(fila, columna, celula);
 		} else
-			throw new PosicionNoVacia();
+			sinErrores = false;
+		return sinErrores;
 	}
 
-	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango, PosicionVacia {
-		this.eliminarCelula(casilla.getFila(), casilla.getColumna());
+	public boolean eliminarCelula(Casilla casilla) throws IndicesFueraDeRango {
+		return this.eliminarCelula(casilla.getFila(), casilla.getColumna());
 	}
 
-	public void eliminarCelula(int fila, int columna) throws IndicesFueraDeRango, PosicionVacia {
+	public boolean eliminarCelula(int fila, int columna) throws IndicesFueraDeRango {
+		boolean sinErrores = true;
 		if (!superficie.esVacia(fila, columna)) {
 			superficie.vaciarCasilla(fila, columna);
 		} else
-			throw new PosicionVacia();
+			sinErrores = false;
+		return sinErrores;
 	}
 
 	public void evoluciona() {
@@ -78,7 +80,7 @@ public abstract class Mundo {
 			}
 			System.out.println();
 		} catch (IndicesFueraDeRango e) {
-			// La exccepción jamás se dará.
+			System.out.println(e);
 		}
 	}
 
@@ -94,8 +96,8 @@ public abstract class Mundo {
 	}
 
 	private void inicializarMovidas(boolean movidas[][]) {
-		for (int i = 0; i < superficie.getFilas(); i++) {
-			for (int j = 0; j < superficie.getColumnas(); j++) {
+		for (int i = 0; i < this.filas; i++) {
+			for (int j = 0; j < this.columnas; j++) {
 				movidas[i][j] = false;
 			}
 		}

@@ -97,7 +97,7 @@ public class Superficie {
 				superficie += '\n';
 			}
 		} catch (IndicesFueraDeRango e) {
-			// La excepción jamás se dará.
+			System.out.println(e);
 		}
 		return superficie;
 	}

@@ -17,19 +17,19 @@ public class CelulaSimple implements Celula {
 		this.pasosSinMover = pasosSinMover;
 		this.esComestible = true;
 	}
-	
-	public CelulaSimple()
-	{
+
+	public CelulaSimple() {
 		this.pasosDados = 0;
 		this.pasosSinMover = 0;
 		this.esComestible = true;
 	}
+
 	public String toString() {
 		return "X";
 	}
+
 	public void cargar(FileReader entrada) {
-	
-		
+
 	}
 
 	public void guardar() {
@@ -39,48 +39,47 @@ public class CelulaSimple implements Celula {
 
 		Casilla destino = null;
 		VectorMov entorno = new VectorMov();
-		try{
-		for (int i = origen.getFila() - 1; i <= origen.getFila() + 1; i++) {
-			for (int j = origen.getColumna() - 1; j <= origen.getColumna() + 1; j++) {
-				Casilla posicionCandidata = new Casilla(i, j);
-				if (i >= 0 && i < superficie.getFilas()) {
-					if (j >= 0 && j < superficie.getColumnas()) {
-						if (superficie.esVacia(posicionCandidata)) {
-							entorno.setCeldaSiguiente(posicionCandidata);
+		try {
+			for (int i = origen.getFila() - 1; i <= origen.getFila() + 1; i++) {
+				for (int j = origen.getColumna() - 1; j <= origen.getColumna() + 1; j++) {
+					Casilla posicionCandidata = new Casilla(i, j);
+					if (i >= 0 && i < superficie.getFilas()) {
+						if (j >= 0 && j < superficie.getColumnas()) {
+							if (superficie.esVacia(posicionCandidata)) {
+								entorno.setCeldaSiguiente(posicionCandidata);
+							}
 						}
 					}
 				}
 			}
-		}
 
-		this.pasosDados++;
+			this.pasosDados++;
 
-		if (entorno.getContador() > 0) {
-			int aleatorio = (int) (Math.random() * entorno.getContador());
-			int f = entorno.getFila(aleatorio);
-			int c = entorno.getColumna(aleatorio);
-			destino = new Casilla(f, c);
-			superficie.setCasilla(destino, this);
-			superficie.vaciarCasilla(origen);
-			System.out.println("Movimiento de celula simple de " + origen + " a " + destino);
-			if (this.pasosDados % PASOS_REPRODUCCION == 0) {
-				CelulaSimple hija = new CelulaSimple();
-				superficie.setCasilla(origen, hija);
-				System.out.println("Nace nueva celula simple en " + origen + " cuyo padre ha sido " + destino);
-			}
-		} else {
-			this.pasosSinMover++;
-			if (this.pasosSinMover >= MAX_PASOS_SIN_MOVER + 1) {
+			if (entorno.getContador() > 0) {
+				int aleatorio = (int) (Math.random() * entorno.getContador());
+				int f = entorno.getFila(aleatorio);
+				int c = entorno.getColumna(aleatorio);
+				destino = new Casilla(f, c);
+				superficie.setCasilla(destino, this);
 				superficie.vaciarCasilla(origen);
-				System.out.println("Muere la celula simple de la casilla " + origen + " por inactividad");
-			} else if (this.pasosDados % PASOS_REPRODUCCION == 0) {
-				System.out.println("Muere la celula simple de la casilla " + origen + " por irreproducibilidad");
-				superficie.vaciarCasilla(origen);
+				System.out.println("Movimiento de celula simple de " + origen + " a " + destino);
+				if (this.pasosDados % PASOS_REPRODUCCION == 0) {
+					CelulaSimple hija = new CelulaSimple();
+					superficie.setCasilla(origen, hija);
+					System.out.println("Nace nueva celula simple en " + origen + " cuyo padre ha sido " + destino);
+				}
+			} else {
+				this.pasosSinMover++;
+				if (this.pasosSinMover >= MAX_PASOS_SIN_MOVER + 1) {
+					superficie.vaciarCasilla(origen);
+					System.out.println("Muere la celula simple de la casilla " + origen + " por inactividad");
+				} else if (this.pasosDados % PASOS_REPRODUCCION == 0) {
+					System.out.println("Muere la celula simple de la casilla " + origen + " por irreproducibilidad");
+					superficie.vaciarCasilla(origen);
+				}
 			}
-		}
-		}catch(IndicesFueraDeRango e)
-		{
-			//Las excepciones no se dan Nunca.
+		} catch (IndicesFueraDeRango e) {
+			System.out.println(e);
 		}
 		return destino;
 	}

@@ -1,7 +1,8 @@
 package pr3.excepciones;
 
+@SuppressWarnings("serial")
 public class IndicesFueraDeRango extends Exception {
 	public String toString() {
-		return "ERROR: Indices Fuera de Rango";
+		return "ERROR: Índices Fuera de Rango.";
 	}
 }

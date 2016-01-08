@@ -1,16 +1,11 @@
 package pr3.control;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
 
 import pr3.control.comandos.Comando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
-import pr3.excepciones.PosicionNoVacia;
-import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 import pr3.logica.Celula;
 import pr3.mundo.Mundo;
@@ -28,17 +23,6 @@ public class Controlador {
 	}
 
 	void cargar(String nombreFichero) throws FileNotFoundException {
-		File fichero = new File(nombreFichero);
-		try {
-			FileReader entrada = new FileReader(fichero);
-		} catch (IOException e) {
-			System.out.println("Imposible");
-		}
-		Scanner sc = new Scanner(fichero);
-		while (sc.hasNextLine()) {
-
-		}
-		sc.close();
 	}
 
 	public void realizaSilulacion() {
@@ -85,11 +69,11 @@ public class Controlador {
 		this.mundo.inicializaMundo();
 	}
 
-	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango, PosicionVacia {
+	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango {
 		this.mundo.eliminarCelula(casilla);
 	}
 
-	public void crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango, PosicionNoVacia {
+	public void crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
 		this.mundo.crearCelula(casilla, celula);
 	}
 
@@ -102,6 +86,7 @@ public class Controlador {
 		System.out.println("De que tipo: Compleja (1) o Simple (2): ");
 		try {
 			num = in.nextInt();
+			in.nextLine();
 		} catch (Exception e) {
 			throw new FormatoNumericoIncorrecto();
 		}
@@ -109,11 +94,9 @@ public class Controlador {
 			throw new FormatoNumericoIncorrecto();
 		return num;
 	}
-	
-	public boolean getComplejidad()
-	{
-		Mundo world = new MundoSimple();
-		if(mundo.getClass().equals(world))
+
+	public boolean getComplejidad() {
+		if (this.mundo.getClass() == MundoSimple.class)
 			return true;
 		else
 			return false;

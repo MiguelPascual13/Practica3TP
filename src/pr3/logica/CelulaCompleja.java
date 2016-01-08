@@ -30,32 +30,31 @@ public class CelulaCompleja implements Celula {
 
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 		Casilla destino = null;
-		try{
-		int fAleatoria = (int) (Math.random() * superficie.getFilas());
-		int cAleatoria = (int) (Math.random() * superficie.getColumnas());
-		destino = new Casilla(fAleatoria, cAleatoria);
-		if (superficie.esVacia(destino)) {
-			superficie.setCasilla(destino, this);
-			superficie.vaciarCasilla(origen);
-			System.out.println("Movimiento de celula compleja de " + origen + " a " + destino);
-		} else {
-			if (!superficie.getComestibilidad(destino))
-				destino = null;
-			else {
-				this.celulasComidas++;
+		try {
+			int fAleatoria = (int) (Math.random() * superficie.getFilas());
+			int cAleatoria = (int) (Math.random() * superficie.getColumnas());
+			destino = new Casilla(fAleatoria, cAleatoria);
+			if (superficie.esVacia(destino)) {
 				superficie.setCasilla(destino, this);
 				superficie.vaciarCasilla(origen);
 				System.out.println("Movimiento de celula compleja de " + origen + " a " + destino);
-				System.out.println("La celula simple de " + destino + " fue deglutida");
-				if (this.celulasComidas >= MAX_COMIDAS) {
-					System.out.println("La celula compleja de " + destino + " exploto");
-					superficie.vaciarCasilla(destino);
+			} else {
+				if (!superficie.getComestibilidad(destino))
+					destino = null;
+				else {
+					this.celulasComidas++;
+					superficie.setCasilla(destino, this);
+					superficie.vaciarCasilla(origen);
+					System.out.println("Movimiento de celula compleja de " + origen + " a " + destino);
+					System.out.println("La celula simple de " + destino + " fue deglutida");
+					if (this.celulasComidas >= MAX_COMIDAS) {
+						System.out.println("La celula compleja de " + destino + " exploto");
+						superficie.vaciarCasilla(destino);
+					}
 				}
 			}
-		}
-		}catch(IndicesFueraDeRango e)
-		{
-			//La excepción no se puede dar.
+		} catch (IndicesFueraDeRango e) {
+			System.out.println(e);
 		}
 		return destino;
 	}

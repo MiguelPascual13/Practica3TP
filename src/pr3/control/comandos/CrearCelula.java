@@ -3,7 +3,6 @@ package pr3.control.comandos;
 import pr3.control.Controlador;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
-import pr3.excepciones.PosicionNoVacia;
 import pr3.logica.Casilla;
 import pr3.logica.Celula;
 import pr3.logica.CelulaCompleja;
@@ -20,7 +19,7 @@ public class CrearCelula implements Comando {
 	}
 
 	public void ejecuta(Controlador controlador) {
-		if(controlador.getComplejidad())
+		if (controlador.getComplejidad())
 			this.ejecutaSimple(controlador);
 		else
 			this.ejecutaComplejo(controlador);
@@ -30,12 +29,11 @@ public class CrearCelula implements Comando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {
 			if (cadenaComando[0].equals("CREARCELULA")) {
-				comando = this;
 				try {
-					this.fila = Integer.parseInt(cadenaComando[1]);
-					this.columna = Integer.parseInt(cadenaComando[2]);
+					this.parseaParametros(cadenaComando);
+					comando = this;
 				} catch (Exception e) {
-					System.out.println("ERROR: Formato Numérico Incorrecto");
+					System.out.println(e);
 				}
 			}
 		}
@@ -51,21 +49,19 @@ public class CrearCelula implements Comando {
 		String caracteristica = null;
 		try {
 			if (controlador.crearCelula() == 1) {
-				celula = new CelulaSimple();
-				caracteristica = "simple";
-			} else {
 				celula = new CelulaCompleja();
 				caracteristica = "compleja";
+			} else {
+				celula = new CelulaSimple();
+				caracteristica = "simple";
 			}
 			Casilla casilla = new Casilla(this.fila, this.columna);
 			controlador.crearCelula(casilla, celula);
 			System.out.println("Creando celula " + caracteristica + " en " + casilla + "...");
 		} catch (IndicesFueraDeRango e1) {
 			System.out.println(e1);
-		} catch (PosicionNoVacia e2) {
+		} catch (FormatoNumericoIncorrecto e2) {
 			System.out.println(e2);
-		} catch (FormatoNumericoIncorrecto e3) {
-			System.out.println(e3);
 		}
 	}
 
@@ -75,10 +71,17 @@ public class CrearCelula implements Comando {
 			Casilla casilla = new Casilla(this.fila, this.columna);
 			controlador.crearCelula(casilla, celula);
 			System.out.println("Creando celula simple en " + casilla + "...");
-		} catch (IndicesFueraDeRango e1) {
-			System.out.println(e1);
-		} catch (PosicionNoVacia e2) {
-			System.out.println(e2);
+		} catch (IndicesFueraDeRango e) {
+			System.out.println(e);
+		}
+	}
+
+	private void parseaParametros(String[] cadenaComando) throws FormatoNumericoIncorrecto {
+		try {
+			this.fila = Integer.parseInt(cadenaComando[1]);
+			this.columna = Integer.parseInt(cadenaComando[2]);
+		} catch (Exception e) {
+			throw new FormatoNumericoIncorrecto();
 		}
 	}
 }

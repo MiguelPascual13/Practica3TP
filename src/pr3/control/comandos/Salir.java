@@ -4,7 +4,6 @@ import pr3.control.Controlador;
 
 public class Salir implements Comando {
 	public void ejecuta(Controlador controlador) {
-		System.out.println("Finalizando simulacion...");
 		controlador.setSimulacionTerminada(true);
 	}
 
