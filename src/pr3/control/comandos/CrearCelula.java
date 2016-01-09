@@ -4,6 +4,7 @@ import pr3.control.Controlador;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PosicionNoVacia;
 import pr3.logica.Casilla;
 import pr3.logica.celula.Celula;
 import pr3.logica.celula.CelulaCompleja;
@@ -64,6 +65,8 @@ public class CrearCelula implements Comando {
 			System.out.println(e1);
 		} catch (FormatoNumericoIncorrecto e2) {
 			System.out.println(e2);
+		} catch (PosicionNoVacia e3) {
+			System.out.println(e3);
 		}
 	}
 
@@ -73,8 +76,10 @@ public class CrearCelula implements Comando {
 			Casilla casilla = new Casilla(this.fila, this.columna);
 			controlador.crearCelula(casilla, celula);
 			System.out.println("Creando celula simple en " + casilla + "...");
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
+		} catch (IndicesFueraDeRango e1) {
+			System.out.println(e1);
+		} catch (PosicionNoVacia e2) {
+			System.out.println(e2);
 		}
 	}
 

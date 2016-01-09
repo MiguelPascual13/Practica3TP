@@ -40,11 +40,11 @@ public abstract class Mundo {
 		return superficie.toString();
 	}
 
-	public boolean crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
+	public boolean crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango{
 		return this.crearCelula(casilla.getFila(), casilla.getColumna(), celula);
 	}
 
-	public boolean crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
+	public boolean crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango{
 		boolean sinErrores = true;
 		if (superficie.esVacia(fila, columna)) {
 			superficie.setCasilla(fila, columna, celula);

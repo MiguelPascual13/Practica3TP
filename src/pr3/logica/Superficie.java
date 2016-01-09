@@ -10,7 +10,7 @@ public class Superficie {
 
 	private Celula[][] tablero;
 
-	public void enRango(int fila, int columna) throws IndicesFueraDeRango {
+	private void enRango(int fila, int columna) throws IndicesFueraDeRango {
 		if (fila < 0 || fila >= this.filas)
 			throw new IndicesFueraDeRango();
 		else if (columna < 0 || columna >= this.columnas)

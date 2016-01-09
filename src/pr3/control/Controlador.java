@@ -7,6 +7,8 @@ import pr3.control.comandos.Comando;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PosicionNoVacia;
+import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 import pr3.logica.celula.Celula;
 import pr3.logica.mundo.Mundo;
@@ -72,12 +74,14 @@ public class Controlador {
 		this.mundo.inicializaMundo();
 	}
 
-	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango {
-		this.mundo.eliminarCelula(casilla);
+	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango, PosicionVacia {
+		if(!this.mundo.eliminarCelula(casilla))
+			throw new PosicionVacia();
 	}
 
-	public void crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
-		this.mundo.crearCelula(casilla, celula);
+	public void crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango, PosicionNoVacia {
+		if (!this.mundo.crearCelula(casilla, celula))
+			throw new PosicionNoVacia();
 	}
 
 	public void juega(Mundo mundo) {

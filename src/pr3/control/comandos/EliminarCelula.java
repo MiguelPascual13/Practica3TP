@@ -4,6 +4,7 @@ import pr3.control.Controlador;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 
 public class EliminarCelula implements Comando {
@@ -20,8 +21,10 @@ public class EliminarCelula implements Comando {
 		try {
 			controlador.eliminarCelula(casilla);
 			System.out.println("Eliminando la celula de " + casilla + "...");
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
+		} catch (IndicesFueraDeRango e1) {
+			System.out.println(e1);
+		} catch (PosicionVacia e2) {
+			System.out.println(e2);
 		}
 	}
 
