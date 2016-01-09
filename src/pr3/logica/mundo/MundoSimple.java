@@ -1,5 +1,8 @@
 package pr3.logica.mundo;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 import pr3.excepciones.ErrorDeInicializacion;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.celula.CelulaSimple;
@@ -13,6 +16,11 @@ public class MundoSimple extends Mundo {
 			throw new ErrorDeInicializacion();
 		this.simples = simples;
 		this.inicializaMundo();
+	}
+
+	public MundoSimple() {
+		super();
+		this.simples = 0;
 	}
 
 	public void inicializaMundo() {
@@ -30,6 +38,11 @@ public class MundoSimple extends Mundo {
 		} catch (IndicesFueraDeRango e) {
 			System.out.println(e);
 		}
+	}
+
+	public void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango {
+		fich.write("simple\n" + this.filas + "\n" + this.columnas + "\n");
+		this.superficie.guardar(fich);
 	}
 
 }

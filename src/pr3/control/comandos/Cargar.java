@@ -1,21 +1,30 @@
 package pr3.control.comandos;
 
+import java.io.FileNotFoundException;
+
 import pr3.control.Controlador;
 
 public class Cargar implements Comando {
 
 	private String nombreFichero;
 
-	@Override
 	public void ejecuta(Controlador controlador) {
-		// TODO Auto-generated method stub
-
+		try {
+			controlador.cargar(this.nombreFichero);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	@Override
 	public Comando parsea(String[] cadenaComando) {
-		// TODO Auto-generated method stub
-		return null;
+		Comando comando = null;
+		if (cadenaComando.length >= 2) {
+			if (cadenaComando[0].equals("CARGAR")) {
+				this.nombreFichero = cadenaComando[1];
+				comando = this;
+			}
+		}
+		return comando;
 	}
 
 	public String textoAyuda() {

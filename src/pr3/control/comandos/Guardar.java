@@ -1,21 +1,29 @@
 package pr3.control.comandos;
 
+import java.io.IOException;
+
 import pr3.control.Controlador;
 
 public class Guardar implements Comando {
 
 	private String nombreFichero;
 
-	@Override
 	public void ejecuta(Controlador controlador) {
-		// TODO Auto-generated method stub
-
+		try {
+			controlador.guardar(this.nombreFichero);
+		} catch (IOException e) {
+		}
 	}
 
-	@Override
 	public Comando parsea(String[] cadenaComando) {
-		// TODO Auto-generated method stub
-		return null;
+		Comando comando = null;
+		if (cadenaComando.length >= 2) {
+			if (cadenaComando[0].equals("GUARDAR")) {
+				this.nombreFichero = cadenaComando[1];
+				comando = this;
+			}
+		}
+		return comando;
 	}
 
 	public String textoAyuda() {

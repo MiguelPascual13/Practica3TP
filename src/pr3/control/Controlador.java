@@ -1,6 +1,9 @@
 package pr3.control;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import pr3.control.comandos.Comando;
@@ -13,6 +16,7 @@ import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 import pr3.logica.celula.Celula;
 import pr3.logica.mundo.Mundo;
+import pr3.logica.mundo.MundoComplejo;
 import pr3.logica.mundo.MundoSimple;
 
 public class Controlador {
@@ -26,7 +30,35 @@ public class Controlador {
 		this.in = in;
 	}
 
-	void cargar(String nombreFichero) throws FileNotFoundException {
+	public void cargar(String nombreFichero) throws FileNotFoundException {
+		File fichero = new File(nombreFichero);
+		Scanner fich = new Scanner(fichero);
+		try {
+			String complejidad = fich.nextLine();
+			if (complejidad.equals("simple")) {
+				this.mundo = new MundoSimple();
+			} else if (complejidad.equals("complejo")) {
+				this.mundo = new MundoComplejo();
+			}
+			mundo.cargar(fich);
+		} catch (IndicesFueraDeRango e) {
+
+		} finally {
+			fich.close();
+		}
+	}
+
+	public void guardar(String nombreFichero) throws IOException {
+		FileWriter fichero = new FileWriter(nombreFichero);
+		try {
+			this.mundo.guardar(fichero);
+		} catch (Exception e) {
+
+		}
+		finally
+		{
+			fichero.close();
+		}
 	}
 
 	public void realizaSilulacion() {
@@ -76,7 +108,7 @@ public class Controlador {
 	}
 
 	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango, PosicionVacia {
-		if(!this.mundo.eliminarCelula(casilla))
+		if (!this.mundo.eliminarCelula(casilla))
 			throw new PosicionVacia();
 	}
 

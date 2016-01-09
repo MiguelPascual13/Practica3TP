@@ -1,6 +1,7 @@
 package pr3.logica.celula;
 
-import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
@@ -8,9 +9,9 @@ import pr3.logica.Superficie;
 public interface Celula {
 	public abstract String toString();
 
-	public abstract void cargar(FileReader entrada);
+	public abstract void cargar(String [] cadenaLinea);
 
-	public abstract void guardar();
+	public abstract void guardar(FileWriter fich) throws IOException;
 
 	public abstract Casilla ejecutaMovimiento(Casilla casilla, Superficie superficie);
 

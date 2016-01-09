@@ -1,5 +1,9 @@
 package pr3.logica.mundo;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
@@ -24,12 +28,12 @@ public abstract class Mundo {
 
 	public abstract void inicializaMundo();
 
-	public boolean guardar() {
-		return false;
-	}
+	public abstract void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango;
 
-	public boolean cargar() {
-		return true;
+	public void cargar(Scanner fich) throws IndicesFueraDeRango {
+		this.cargarDimension(fich);
+		this.superficie = new Superficie(this.filas, this.columnas);
+		this.superficie.cargar(fich);
 	}
 
 	public void vaciar() {
@@ -96,5 +100,11 @@ public abstract class Mundo {
 				movidas[i][j] = false;
 			}
 		}
+	}
+
+	protected void cargarDimension(Scanner fich) {
+		this.filas = fich.nextInt();
+		this.columnas = fich.nextInt();
+		fich.nextLine();
 	}
 }

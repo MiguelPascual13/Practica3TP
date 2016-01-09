@@ -1,6 +1,7 @@
 package pr3.logica.celula;
 
-import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
@@ -24,11 +25,13 @@ public class CelulaSimple implements Celula {
 		return "X";
 	}
 
-	public void cargar(FileReader entrada) {
-
+	public void cargar(String[] cadenaLinea) {
+		this.pasosDados = Integer.parseInt(cadenaLinea[3]);
+		this.pasosSinMover = Integer.parseInt(cadenaLinea[4]);
 	}
 
-	public void guardar() {
+	public void guardar(FileWriter fich) throws IOException {
+		fich.write("simple " + this.pasosDados + " " + this.pasosSinMover + "\n");
 	}
 
 	public boolean esComestible() {

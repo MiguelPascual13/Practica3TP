@@ -1,7 +1,13 @@
 package pr3.logica;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.celula.Celula;
+import pr3.logica.celula.CelulaCompleja;
+import pr3.logica.celula.CelulaSimple;
 
 public class Superficie {
 
@@ -19,9 +25,9 @@ public class Superficie {
 		return sinErrores;
 	}
 
-	public Superficie(int nf, int nc) {
-		this.filas = nf;
-		this.columnas = nc;
+	public Superficie(int filas, int columnas) {
+		this.filas = filas;
+		this.columnas = columnas;
 		tablero = new Celula[this.filas][this.columnas];
 		vaciar();
 	}
@@ -109,11 +115,31 @@ public class Superficie {
 		return superficie;
 	}
 
-	public boolean cargar() {
-		return false;
+	public void cargar(Scanner fich) throws IndicesFueraDeRango {
+		Celula celula = null;
+		while (fich.hasNextLine()) {
+			String linea = fich.nextLine();
+			String[] cadenaLinea = linea.split(" ");
+			int fila = Integer.parseInt(cadenaLinea[0]);
+			int columna = Integer.parseInt(cadenaLinea[1]);
+			if (cadenaLinea[2].equals("simple")) {
+				celula = new CelulaSimple();
+			} else if (cadenaLinea[2].equals("compleja")) {
+				celula = new CelulaCompleja();
+			}
+			celula.cargar(cadenaLinea);
+			this.setCasilla(fila, columna, celula);
+		}
 	}
 
-	public boolean guardar() {
-		return false;
+	public void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango {
+		for (int i = 0; i < this.filas; i++) {
+			for (int j = 0; j < this.columnas; j++) {
+				if (!this.esVacia(i, j)) {
+					fich.write(i + " " + j + " ");
+					this.tablero[i][j].guardar(fich);
+				}
+			}
+		}
 	}
 }
