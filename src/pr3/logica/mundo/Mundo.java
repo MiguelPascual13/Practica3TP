@@ -40,11 +40,11 @@ public abstract class Mundo {
 		return superficie.toString();
 	}
 
-	public boolean crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango{
+	public boolean crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
 		return this.crearCelula(casilla.getFila(), casilla.getColumna(), celula);
 	}
 
-	public boolean crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango{
+	public boolean crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
 		boolean sinErrores = true;
 		if (superficie.esVacia(fila, columna)) {
 			superficie.setCasilla(fila, columna, celula);
@@ -84,15 +84,10 @@ public abstract class Mundo {
 		}
 	}
 
-	public void moverCelula(Casilla casilla, boolean movidas[][]) {
+	private void moverCelula(Casilla casilla, boolean movidas[][]) {
 		Casilla destino = superficie.ejecutaMovimiento(casilla);
 		if (destino != null)
 			movidas[destino.getFila()][destino.getColumna()] = true;
-	}
-
-	public void moverCelula(int fila, int columna, boolean movidas[][]) {
-		Casilla casilla = new Casilla(fila, columna);
-		this.moverCelula(casilla, movidas);
 	}
 
 	private void inicializarMovidas(boolean movidas[][]) {

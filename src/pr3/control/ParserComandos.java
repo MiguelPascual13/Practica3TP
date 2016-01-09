@@ -11,6 +11,7 @@ import pr3.control.comandos.Jugar;
 import pr3.control.comandos.Paso;
 import pr3.control.comandos.Salir;
 import pr3.control.comandos.Vaciar;
+import pr3.excepciones.ComandoNoExistente;
 import pr3.excepciones.ErrorComando;
 
 public class ParserComandos {
@@ -25,7 +26,7 @@ public class ParserComandos {
 		return ayuda;
 	}
 
-	static public Comando parseaComando(String[] cadenas) throws ErrorComando {
+	static public Comando parseaComando(String[] cadenas) throws ErrorComando, ComandoNoExistente {
 		Comando comando = null;
 		boolean encontrado = false;
 		int i = 0;
@@ -39,6 +40,8 @@ public class ParserComandos {
 
 		if (encontrado)
 			comando = comandos[i];
+		else
+			throw new ComandoNoExistente();
 
 		return comando;
 	}

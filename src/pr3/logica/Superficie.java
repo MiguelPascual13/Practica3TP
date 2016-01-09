@@ -10,11 +10,13 @@ public class Superficie {
 
 	private Celula[][] tablero;
 
-	private void enRango(int fila, int columna) throws IndicesFueraDeRango {
+	public boolean enRango(int fila, int columna) {
+		boolean sinErrores = true;
 		if (fila < 0 || fila >= this.filas)
-			throw new IndicesFueraDeRango();
+			sinErrores = false;
 		else if (columna < 0 || columna >= this.columnas)
-			throw new IndicesFueraDeRango();
+			sinErrores = false;
+		return sinErrores;
 	}
 
 	public Superficie(int nf, int nc) {
@@ -50,7 +52,8 @@ public class Superficie {
 	}
 
 	public boolean getComestibilidad(int fila, int columna) throws IndicesFueraDeRango {
-		this.enRango(fila, columna);
+		if (!this.enRango(fila, columna))
+			throw new IndicesFueraDeRango();
 		return tablero[fila][columna].esComestible();
 	}
 
@@ -59,7 +62,8 @@ public class Superficie {
 	}
 
 	public boolean esVacia(int fila, int columna) throws IndicesFueraDeRango {
-		this.enRango(fila, columna);
+		if (!enRango(fila, columna))
+			throw new IndicesFueraDeRango();
 		boolean vacia = false;
 		if (tablero[fila][columna] == null)
 			vacia = true;
@@ -71,7 +75,8 @@ public class Superficie {
 	}
 
 	public void vaciarCasilla(int fila, int columna) throws IndicesFueraDeRango {
-		this.enRango(fila, columna);
+		if (!this.enRango(fila, columna))
+			throw new IndicesFueraDeRango();
 		this.tablero[fila][columna] = null;
 	}
 
@@ -80,7 +85,8 @@ public class Superficie {
 	}
 
 	public void setCasilla(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
-		this.enRango(fila, columna);
+		if (!this.enRango(fila, columna))
+			throw new IndicesFueraDeRango();
 		this.tablero[fila][columna] = celula;
 	}
 

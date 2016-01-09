@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import pr3.control.comandos.Comando;
+import pr3.excepciones.ComandoNoExistente;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
@@ -38,8 +39,8 @@ public class Controlador {
 				comando.ejecuta(this);
 			} catch (ErrorComando e1) {
 
-			} catch (NullPointerException e2) {
-				System.out.println("ERROR: Comando no existente.");
+			} catch (ComandoNoExistente e2) {
+				System.out.println(e2);
 			}
 			if (!this.simulacionTerminada) {
 				System.out.println(mundo);

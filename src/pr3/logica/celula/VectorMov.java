@@ -11,13 +11,10 @@ public class VectorMov {
 	public VectorMov() {
 		contador = 0;
 		entorno = new Casilla[MAX_ENTORNO];
-		vaciar();
 	}
 
-	private void vaciar() {
-		for (int i = 0; i < MAX_ENTORNO; i++) {
-			entorno[i] = null;
-		}
+	public boolean noVacio() {
+		return this.contador > 0;
 	}
 
 	public int getContador() {
@@ -32,7 +29,7 @@ public class VectorMov {
 		return this.entorno[indice].getColumna();
 	}
 
-	public void setCeldaSiguiente(Casilla celda) {
-		this.entorno[contador++] = celda;
+	public void setCeldaSiguiente(int fila, int columna) {
+		this.entorno[contador++] = new Casilla(fila, columna);
 	}
 }

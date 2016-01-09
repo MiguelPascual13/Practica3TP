@@ -7,16 +7,13 @@ import pr3.logica.Casilla;
 import pr3.logica.Superficie;
 
 public class CelulaCompleja implements Celula {
-	private final int MAX_COMIDAS = 3;
+	public static final int MAX_COMIDAS = 3;
 	private int celulasComidas;
 	private boolean esComestible;
 
-	public CelulaCompleja(int celulasComidas) {
-		this.celulasComidas = celulasComidas;
-	}
-
 	public CelulaCompleja() {
 		this.celulasComidas = 0;
+		this.esComestible = false;
 	}
 
 	public String toString() {
@@ -30,38 +27,64 @@ public class CelulaCompleja implements Celula {
 	public void guardar() {
 	}
 
+	public boolean esComestible() {
+		return this.esComestible;
+	}
+
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 		Casilla destino = null;
+		boolean come = false;
+		boolean explota = false;
+		boolean mueve = false;
 		try {
-			int fAleatoria = (int) (Math.random() * superficie.getFilas());
-			int cAleatoria = (int) (Math.random() * superficie.getColumnas());
-			destino = new Casilla(fAleatoria, cAleatoria);
-			if (superficie.esVacia(destino)) {
-				superficie.setCasilla(destino, this);
-				superficie.vaciarCasilla(origen);
-				System.out.println("Movimiento de celula compleja de " + origen + " a " + destino);
+			int fila = (int) (Math.random() * superficie.getFilas());
+			int columna = (int) (Math.random() * superficie.getColumnas());
+			if (mueve = superficie.esVacia(fila, columna)) {
+				destino = new Casilla(fila, columna);
+				this.movimiento(origen, destino, superficie);
 			} else {
-				if (!superficie.getComestibilidad(destino))
-					destino = null;
-				else {
-					this.celulasComidas++;
-					superficie.setCasilla(destino, this);
-					superficie.vaciarCasilla(origen);
-					System.out.println("Movimiento de celula compleja de " + origen + " a " + destino);
-					System.out.println("La celula simple de " + destino + " fue deglutida");
-					if (this.celulasComidas >= MAX_COMIDAS) {
-						System.out.println("La celula compleja de " + destino + " exploto");
-						superficie.vaciarCasilla(destino);
-					}
+				if (come = superficie.getComestibilidad(fila, columna)) {
+					destino = new Casilla(fila, columna);
+					this.movimiento(origen, destino, superficie);
+					mueve = true;
+					this.aumentarComidas();
+				}
+				if ((explota = this.celulasComidas >= MAX_COMIDAS) && mueve) {
+					this.muerte(destino, superficie);
 				}
 			}
+			this.mensajes(origen, destino, come, explota, mueve);
 		} catch (IndicesFueraDeRango e) {
 			System.out.println(e);
 		}
 		return destino;
 	}
 
-	public boolean esComestible() {
-		return this.esComestible;
+	private void movimiento(Casilla origen, Casilla destino, Superficie superficie) throws IndicesFueraDeRango {
+		superficie.setCasilla(destino, this);
+		superficie.vaciarCasilla(origen);
+	}
+
+	private void muerte(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
+		superficie.vaciarCasilla(casilla);
+	}
+
+	private void aumentarComidas() {
+		this.celulasComidas++;
+	}
+
+	private void mensajes(Casilla origen, Casilla destino, boolean come, boolean explota, boolean mueve) {
+		if (mueve) {
+			System.out.println("COMPLEJA de " + origen + " a " + destino);
+			if (come) {
+				System.out.println("COME");
+				if (explota)
+					System.out.println("EXPLOTA");
+				else
+					System.out.println("NO EXPLOTA");
+			} else
+				System.out.println("NO COME");
+		} else
+			System.out.println("COMPLEJA de " + origen + " NO SE MUEVE");
 	}
 }
