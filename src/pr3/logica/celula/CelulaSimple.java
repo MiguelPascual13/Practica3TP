@@ -3,6 +3,7 @@ package pr3.logica.celula;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
@@ -25,9 +26,13 @@ public class CelulaSimple implements Celula {
 		return "X";
 	}
 
-	public void cargar(String[] cadenaLinea) {
-		this.pasosDados = Integer.parseInt(cadenaLinea[3]);
-		this.pasosSinMover = Integer.parseInt(cadenaLinea[4]);
+	public void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
+		try {
+			this.pasosDados = Integer.parseInt(cadenaLinea[3]);
+			this.pasosSinMover = Integer.parseInt(cadenaLinea[4]);
+		} catch (Exception e) {
+			throw new FormatoNumericoIncorrecto();
+		}
 	}
 
 	public void guardar(FileWriter fich) throws IOException {

@@ -4,7 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PalabraIncorrecta;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
 import pr3.logica.celula.Celula;
@@ -28,9 +30,12 @@ public abstract class Mundo {
 
 	public abstract void inicializaMundo();
 
-	public abstract void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango;
+	public void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango {
+		fich.write(this.getComplejidad() + this.filas + "\n" + this.columnas + "\n");
+		this.superficie.guardar(fich);
+	}
 
-	public void cargar(Scanner fich) throws IndicesFueraDeRango {
+	public void cargar(Scanner fich) throws IndicesFueraDeRango, FormatoNumericoIncorrecto, PalabraIncorrecta {
 		this.cargarDimension(fich);
 		this.superficie = new Superficie(this.filas, this.columnas);
 		this.superficie.cargar(fich);
@@ -102,9 +107,16 @@ public abstract class Mundo {
 		}
 	}
 
-	protected void cargarDimension(Scanner fich) {
-		this.filas = fich.nextInt();
-		this.columnas = fich.nextInt();
-		fich.nextLine();
+	private void cargarDimension(Scanner fich) throws FormatoNumericoIncorrecto {
+		try {
+			this.filas = fich.nextInt();
+			this.columnas = fich.nextInt();
+			fich.nextLine();
+		} catch (Exception e) {
+			throw new FormatoNumericoIncorrecto();
+		}
+
 	}
+
+	protected abstract String getComplejidad();
 }

@@ -11,7 +11,7 @@ public class Iniciar implements Comando {
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
-		if (cadenaComando[0].equals("INICIAR"))
+		if (cadenaComando[0].equalsIgnoreCase("INICIAR"))
 			comando = this;
 		return comando;
 	}

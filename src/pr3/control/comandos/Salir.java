@@ -9,7 +9,7 @@ public class Salir implements Comando {
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
-		if (cadenaComando[0].equals("SALIR"))
+		if (cadenaComando[0].equalsIgnoreCase("SALIR"))
 			comando = this;
 		return comando;
 	}

@@ -25,6 +25,7 @@ public class Jugar implements Comando {
 	}
 
 	public void ejecuta(Controlador controlador) {
+		System.out.println("Creando el nuevo mundo...");
 		try {
 			if (this.complejas != -1)
 				this.mundo = new MundoComplejo(this.filas, this.columnas, this.simples, this.complejas);
@@ -39,12 +40,12 @@ public class Jugar implements Comando {
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 5) {
-			if (cadenaComando[0].equals("JUGAR")) {
+			if (cadenaComando[0].equalsIgnoreCase("JUGAR")) {
 				try {
-					if (cadenaComando[1].equals("SIMPLE")) {
+					if (cadenaComando[1].equalsIgnoreCase("SIMPLE")) {
 						this.parseaParametrosSimple(cadenaComando);
 						comando = this;
-					} else if (cadenaComando[1].equals("COMPLEJO") && cadenaComando.length >= 6) {
+					} else if (cadenaComando[1].equalsIgnoreCase("COMPLEJO") && cadenaComando.length >= 6) {
 						this.parseaParametrosComplejo(cadenaComando);
 						comando = this;
 					}

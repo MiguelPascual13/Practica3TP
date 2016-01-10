@@ -3,6 +3,7 @@ package pr3.logica.celula;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
@@ -21,12 +22,16 @@ public class CelulaCompleja implements Celula {
 		return "*";
 	}
 
-	public void cargar(String[] cadenaLinea) {
-		this.celulasComidas = Integer.parseInt(cadenaLinea[3]);
+	public void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
+		try {
+			this.celulasComidas = Integer.parseInt(cadenaLinea[3]);
+		} catch (Exception e) {
+			throw new FormatoNumericoIncorrecto();
+		}
 	}
 
-	public void guardar(FileWriter fich) throws IOException{
-		fich.write("compleja "+ this.celulasComidas + "\n");
+	public void guardar(FileWriter fich) throws IOException {
+		fich.write("compleja " + this.celulasComidas + "\n");
 	}
 
 	public boolean esComestible() {

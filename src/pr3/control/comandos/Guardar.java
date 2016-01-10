@@ -1,7 +1,5 @@
 package pr3.control.comandos;
 
-import java.io.IOException;
-
 import pr3.control.Controlador;
 
 public class Guardar implements Comando {
@@ -9,16 +7,14 @@ public class Guardar implements Comando {
 	private String nombreFichero;
 
 	public void ejecuta(Controlador controlador) {
-		try {
-			controlador.guardar(this.nombreFichero);
-		} catch (IOException e) {
-		}
+		System.out.println("Guardando mundo...");
+		controlador.guardar(this.nombreFichero);
 	}
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
 		if (cadenaComando.length >= 2) {
-			if (cadenaComando[0].equals("GUARDAR")) {
+			if (cadenaComando[0].equalsIgnoreCase("GUARDAR")) {
 				this.nombreFichero = cadenaComando[1];
 				comando = this;
 			}

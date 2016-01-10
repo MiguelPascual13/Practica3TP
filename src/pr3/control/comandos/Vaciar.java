@@ -11,7 +11,7 @@ public class Vaciar implements Comando {
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
-		if (cadenaComando[0].equals("VACIAR"))
+		if (cadenaComando[0].equalsIgnoreCase("VACIAR"))
 			comando = this;
 		return comando;
 	}

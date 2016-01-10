@@ -17,6 +17,7 @@ public class EliminarCelula implements Comando {
 	}
 
 	public void ejecuta(Controlador controlador) {
+		System.out.println("Eliminando celula...");
 		Casilla casilla = new Casilla(this.fila, this.columna);
 		try {
 			controlador.eliminarCelula(casilla);
@@ -31,7 +32,7 @@ public class EliminarCelula implements Comando {
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {
-			if (cadenaComando[0].equals("ELIMINARCELULA")) {
+			if (cadenaComando[0].equalsIgnoreCase("ELIMINARCELULA")) {
 				try {
 					this.parseaParametros(cadenaComando);
 					comando = this;

@@ -4,7 +4,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PalabraIncorrecta;
 import pr3.logica.celula.Celula;
 import pr3.logica.celula.CelulaCompleja;
 import pr3.logica.celula.CelulaSimple;
@@ -115,20 +117,24 @@ public class Superficie {
 		return superficie;
 	}
 
-	public void cargar(Scanner fich) throws IndicesFueraDeRango {
+	public void cargar(Scanner fich) throws IndicesFueraDeRango, PalabraIncorrecta, FormatoNumericoIncorrecto {
 		Celula celula = null;
 		while (fich.hasNextLine()) {
 			String linea = fich.nextLine();
 			String[] cadenaLinea = linea.split(" ");
-			int fila = Integer.parseInt(cadenaLinea[0]);
-			int columna = Integer.parseInt(cadenaLinea[1]);
-			if (cadenaLinea[2].equals("simple")) {
-				celula = new CelulaSimple();
-			} else if (cadenaLinea[2].equals("compleja")) {
-				celula = new CelulaCompleja();
-			}
-			celula.cargar(cadenaLinea);
-			this.setCasilla(fila, columna, celula);
+			if (cadenaLinea.length >= 4) {
+				Casilla casilla = this.parseaCasilla(cadenaLinea);
+				if (cadenaLinea[2].equalsIgnoreCase("simple") && cadenaLinea.length == 5) {
+					celula = new CelulaSimple();
+				} else if (cadenaLinea[2].equalsIgnoreCase("compleja") && cadenaLinea.length == 4) {
+					celula = new CelulaCompleja();
+				} else {
+					throw new PalabraIncorrecta();
+				}
+				celula.cargar(cadenaLinea);
+				this.setCasilla(casilla, celula);
+			} else
+				throw new PalabraIncorrecta();
 		}
 	}
 
@@ -141,5 +147,17 @@ public class Superficie {
 				}
 			}
 		}
+	}
+
+	private Casilla parseaCasilla(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
+		Casilla casilla = null;
+		try {
+			int fila = Integer.parseInt(cadenaLinea[0]);
+			int columna = Integer.parseInt(cadenaLinea[1]);
+			casilla = new Casilla(fila, columna);
+		} catch (Exception e) {
+			throw new FormatoNumericoIncorrecto();
+		}
+		return casilla;
 	}
 }

@@ -21,6 +21,7 @@ public class CrearCelula implements Comando {
 	}
 
 	public void ejecuta(Controlador controlador) {
+		System.out.println("Creando celula...");
 		if (controlador.getComplejidad())
 			this.ejecutaSimple(controlador);
 		else
@@ -30,7 +31,7 @@ public class CrearCelula implements Comando {
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {
-			if (cadenaComando[0].equals("CREARCELULA")) {
+			if (cadenaComando[0].equalsIgnoreCase("CREARCELULA")) {
 				try {
 					this.parseaParametros(cadenaComando);
 					comando = this;

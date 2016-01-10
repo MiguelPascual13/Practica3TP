@@ -10,7 +10,7 @@ public class Ayuda implements Comando {
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
-		if (cadenaComando[0].equals("AYUDA"))
+		if (cadenaComando[0].equalsIgnoreCase("AYUDA"))
 			comando = this;
 		return comando;
 	}

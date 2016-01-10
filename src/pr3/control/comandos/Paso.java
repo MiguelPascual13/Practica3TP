@@ -11,7 +11,7 @@ public class Paso implements Comando {
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
-		if (cadenaComando[0].equals("PASO"))
+		if (cadenaComando[0].equalsIgnoreCase("PASO"))
 			comando = this;
 		return comando;
 	}

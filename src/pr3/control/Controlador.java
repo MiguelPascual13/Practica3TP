@@ -11,6 +11,7 @@ import pr3.excepciones.ComandoNoExistente;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PalabraIncorrecta;
 import pr3.excepciones.PosicionNoVacia;
 import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
@@ -30,34 +31,44 @@ public class Controlador {
 		this.in = in;
 	}
 
-	public void cargar(String nombreFichero) throws FileNotFoundException {
+	public void cargar(String nombreFichero) {
 		File fichero = new File(nombreFichero);
-		Scanner fich = new Scanner(fichero);
+		Scanner fich = null;
 		try {
-			String complejidad = fich.nextLine();
-			if (complejidad.equals("simple")) {
-				this.mundo = new MundoSimple();
-			} else if (complejidad.equals("complejo")) {
-				this.mundo = new MundoComplejo();
-			}
-			mundo.cargar(fich);
-		} catch (IndicesFueraDeRango e) {
-
+			fich = new Scanner(fichero);
+			Mundo mundoCargar = this.getComplejidad(fich);
+			mundoCargar.cargar(fich);
+			this.mundo = mundoCargar;
+		} catch (FormatoNumericoIncorrecto e1) {
+			System.out.println(e1);
+		} catch (IndicesFueraDeRango e2) {
+			System.out.println(e2);
+		} catch (FileNotFoundException e3) {
+			System.out.println("ERROR: No se Encontró el Fichero.");
+		} catch (PalabraIncorrecta e4) {
+			System.out.println(e4);
 		} finally {
-			fich.close();
+			if (fich != null)
+				fich.close();
 		}
 	}
 
-	public void guardar(String nombreFichero) throws IOException {
-		FileWriter fichero = new FileWriter(nombreFichero);
+	public void guardar(String nombreFichero) {
+		FileWriter fichero = null;
 		try {
+			fichero = new FileWriter(nombreFichero);
 			this.mundo.guardar(fichero);
-		} catch (Exception e) {
-
-		}
-		finally
-		{
-			fichero.close();
+		} catch (IndicesFueraDeRango e1) {
+			System.out.println(e1);
+		} catch (IOException e2) {
+			System.out.println(e2);
+		} finally {
+			if (fichero != null)
+				try {
+					fichero.close();
+				} catch (IOException e) {
+					System.out.println("ERROR: No se Pudo Cerrar el Fichero.");
+				}
 		}
 	}
 
@@ -86,7 +97,6 @@ public class Controlador {
 		String[] words = null;
 		System.out.print("Comando > ");
 		String entrada = in.nextLine();
-		entrada = entrada.toUpperCase();
 		words = entrada.split(" ");
 		return words;
 	}
@@ -136,9 +146,17 @@ public class Controlador {
 	}
 
 	public boolean getComplejidad() {
-		if (this.mundo.getClass() == MundoSimple.class)
-			return true;
-		else
-			return false;
+		return this.mundo.getClass() == MundoSimple.class;
+	}
+
+	private Mundo getComplejidad(Scanner fich) throws PalabraIncorrecta {
+		String complejidad = fich.nextLine();
+		if (complejidad.equalsIgnoreCase("simple")) {
+			return new MundoSimple();
+		} else if (complejidad.equalsIgnoreCase("complejo")) {
+			return new MundoComplejo();
+		} else {
+			throw new PalabraIncorrecta();
+		}
 	}
 }

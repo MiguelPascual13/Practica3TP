@@ -1,7 +1,5 @@
 package pr3.control.comandos;
 
-import java.io.FileNotFoundException;
-
 import pr3.control.Controlador;
 
 public class Cargar implements Comando {
@@ -9,17 +7,14 @@ public class Cargar implements Comando {
 	private String nombreFichero;
 
 	public void ejecuta(Controlador controlador) {
-		try {
-			controlador.cargar(this.nombreFichero);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Cargando...");
+		controlador.cargar(this.nombreFichero);
 	}
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
 		if (cadenaComando.length >= 2) {
-			if (cadenaComando[0].equals("CARGAR")) {
+			if (cadenaComando[0].equalsIgnoreCase("CARGAR")) {
 				this.nombreFichero = cadenaComando[1];
 				comando = this;
 			}
