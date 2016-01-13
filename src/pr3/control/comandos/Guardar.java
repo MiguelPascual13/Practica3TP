@@ -6,10 +6,18 @@ public class Guardar implements Comando {
 
 	private String nombreFichero;
 
+	/**
+	 * Guarda el mundo en juego, en un fichero. 
+	 */
+	
 	public void ejecuta(Controlador controlador) {
 		System.out.println("Guardando mundo...");
 		controlador.guardar(this.nombreFichero);
 	}
+	
+	/**
+	 * Comprueba si la cadena coincide con el comando guardar. 
+	 */
 
 	public Comando parsea(String[] cadenaComando) {
 		Comando comando = null;
@@ -23,7 +31,7 @@ public class Guardar implements Comando {
 	}
 
 	public String textoAyuda() {
-		return "GUARDAR:\t\tGuarda la Partida en un Fichero de Texto.\n";
+		return "GUARDAR nombFich:\t\tGuarda la Partida en un Fichero de Texto.\n";
 	}
 
 }
