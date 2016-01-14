@@ -1,9 +1,23 @@
 package pr3.logica;
 
+/**
+ * 
+ * Clase casilla.
+ *
+ */
+
 public class Casilla {
 	private int fila;
 	private int columna;
 
+	/**
+	 * Contructora de la clase casilla asignandoles los valores especificados por parametro.
+	 * @param fila
+	 * Parametro fila.
+	 * @param columna
+	 * Parametro columna. 
+	 */
+	
 	public Casilla(int fila, int columna) {
 		this.fila = fila;
 		this.columna = columna;

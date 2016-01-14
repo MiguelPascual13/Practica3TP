@@ -7,14 +7,28 @@ import pr3.excepciones.IndicesFueraDeRango;
 import pr3.excepciones.PosicionVacia;
 import pr3.logica.Casilla;
 
+/**
+ * 
+ * Comando eliminar celula.
+ *
+ */
+
 public class EliminarCelula implements Comando {
 	private int fila;
 	private int columna;
+	
+	/**
+	 * Contructora de eliminar celula asignandole 0 a fila y colmna.
+	 */
 
 	public EliminarCelula() {
 		this.fila = 0;
 		this.columna = 0;
 	}
+	
+	/**
+	 * Elimina una celula mediante la clase controlador en la posicion especificada.
+	 */
 
 	public void ejecuta(Controlador controlador) {
 		System.out.println("Eliminando celula...");
@@ -29,6 +43,10 @@ public class EliminarCelula implements Comando {
 		}
 	}
 
+	/**
+	 * Comprueba si la cadena coincide con el comando eliminar celula.
+	 */
+	
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {

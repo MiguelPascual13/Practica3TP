@@ -15,6 +15,10 @@ public class Jugar implements Comando {
 	private int columnas;
 	private int simples;
 	private int complejas;
+	
+	/**
+	 * Contructora de jugar.
+	 */
 
 	public Jugar() {
 		this.mundo = null;
@@ -24,6 +28,10 @@ public class Jugar implements Comando {
 		this.complejas = -1;
 	}
 
+	/**
+	 * Ejecuta el comando jugar mediante la clase controlador. 
+	 */
+	
 	public void ejecuta(Controlador controlador) {
 		System.out.println("Creando el nuevo mundo...");
 		try {
@@ -36,6 +44,10 @@ public class Jugar implements Comando {
 			System.out.println(e);
 		}
 	}
+	
+	/**
+	 * Comprueba si la cadena coincide con el comando jugar. 
+	 */
 
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;

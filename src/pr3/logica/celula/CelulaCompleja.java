@@ -8,10 +8,22 @@ import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
 
+/**
+ * 
+ * Clase celula compleja que implementa a la clase celula. Se encarga de gestionar 
+ * todo el tema relacionado con las leyes que rigen a una celula compleja.
+ *
+ */
+
 public class CelulaCompleja implements Celula {
 	public static final int MAX_COMIDAS = 3;
 	private int celulasComidas;
 	private boolean esComestible;
+	
+	/**
+	 * Contructora para celula compleja asignandole un valor
+	 * a celulas comidas y tambien indicar que no es comestible. 
+	 */
 
 	public CelulaCompleja() {
 		this.celulasComidas = 0;
@@ -21,6 +33,10 @@ public class CelulaCompleja implements Celula {
 	public String toString() {
 		return "*";
 	}
+	
+	/**
+	 * Se encarga de cargar del fichero el dato correspondiente a una celula compleja.
+	 */
 
 	public void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
 		try {
@@ -29,6 +45,10 @@ public class CelulaCompleja implements Celula {
 			throw new FormatoNumericoIncorrecto();
 		}
 	}
+	
+	/**
+	 * Se encarga de guardar en el fichero el dato correspondiente a una celula compleja.
+	 */
 
 	public void guardar(FileWriter fich) throws IOException {
 		fich.write("compleja " + this.celulasComidas + "\n");
@@ -38,6 +58,12 @@ public class CelulaCompleja implements Celula {
 		return this.esComestible;
 	}
 
+	/**
+	 * Se encarga de gestionar todo el movimiento de una celula compleja,
+	 * recibe una casilla origen por parametro y si se puede mover 
+	 * se mueve. 
+	 */
+	
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 		Casilla destino = null;
 		boolean come = false;

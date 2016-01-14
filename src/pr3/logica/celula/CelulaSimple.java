@@ -7,6 +7,12 @@ import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
+/**
+ * 
+ * Clase celula simple que implementa a la clase celula. Se encarga de gestionar 
+ * todo el tema relacionado con las leyes que rigen a una celula simple.
+ *
+ */
 
 public class CelulaSimple implements Celula {
 
@@ -16,6 +22,11 @@ public class CelulaSimple implements Celula {
 	private int pasosSinMover;
 	private boolean esComestible;
 
+	/**
+	 * Contructora para celula simple asignandole un valor
+	 * a pasos dados, pasos sin mover y tambien indica si es comestible. 
+	 */
+	
 	public CelulaSimple() {
 		this.pasosDados = 0;
 		this.pasosSinMover = 0;
@@ -26,6 +37,10 @@ public class CelulaSimple implements Celula {
 		return "X";
 	}
 
+	/**
+	 * Se encarga de cargar del fichero los datos correspondientes a una celula simple.
+	 */
+	
 	public void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
 		try {
 			this.pasosDados = Integer.parseInt(cadenaLinea[3]);
@@ -35,13 +50,23 @@ public class CelulaSimple implements Celula {
 		}
 	}
 
+	/**
+	 * Se encarga de guardar en el fichero los datos correspondientes a una celula simple.
+	 */
+	
 	public void guardar(FileWriter fich) throws IOException {
 		fich.write("simple " + this.pasosDados + " " + this.pasosSinMover + "\n");
 	}
-
+	
 	public boolean esComestible() {
 		return esComestible;
 	}
+	
+	/**
+	 * Se encarga de gestionar todo el movimiento de una celula simple,
+	 * recibe una casilla origen por parametro y comprueba si se puede mover 
+	 * y de ser asi se mueve. 
+	 */
 
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 		Casilla destino = null;

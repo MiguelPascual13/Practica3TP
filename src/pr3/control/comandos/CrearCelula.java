@@ -10,15 +10,30 @@ import pr3.logica.celula.Celula;
 import pr3.logica.celula.CelulaCompleja;
 import pr3.logica.celula.CelulaSimple;
 
+/**
+ * 
+ * Comando crear celula.
+ *
+ */
+
 public class CrearCelula implements Comando {
 
 	private int fila;
 	private int columna;
 
+	/**
+	 * Contructora de crear celula asignandole 0 a fila y colmna.
+	 */
+	
 	public CrearCelula() {
 		this.fila = 0;
 		this.columna = 0;
 	}
+	
+	/**
+	 * Crea una celula mediante la clase controlador y dependiendo de su complejidad se crea una celula en un mundo simple
+	 * o en un mundo complejo.
+	 */
 
 	public void ejecuta(Controlador controlador) {
 		System.out.println("Creando celula...");
@@ -27,6 +42,10 @@ public class CrearCelula implements Comando {
 		else
 			this.ejecutaComplejo(controlador);
 	}
+	
+	/**
+	 * Comprueba si la cadena coincide con el comando crear celula.
+	 */
 
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
