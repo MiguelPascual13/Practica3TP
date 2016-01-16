@@ -11,13 +11,15 @@ public class Casilla {
 	private int columna;
 
 	/**
-	 * Contructora de la clase casilla asignandoles los valores especificados por parametro.
+	 * Contructora de la clase casilla asignandoles los valores especificados
+	 * por parametro.
+	 * 
 	 * @param fila
-	 * Parametro fila.
+	 *            Parametro fila.
 	 * @param columna
-	 * Parametro columna. 
+	 *            Parametro columna.
 	 */
-	
+
 	public Casilla(int fila, int columna) {
 		this.fila = fila;
 		this.columna = columna;

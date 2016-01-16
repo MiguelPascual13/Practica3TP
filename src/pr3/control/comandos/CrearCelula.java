@@ -24,15 +24,15 @@ public class CrearCelula implements Comando {
 	/**
 	 * Contructora de crear celula asignandole 0 a fila y colmna.
 	 */
-	
+
 	public CrearCelula() {
 		this.fila = 0;
 		this.columna = 0;
 	}
-	
+
 	/**
-	 * Crea una celula mediante la clase controlador y dependiendo de su complejidad se crea una celula en un mundo simple
-	 * o en un mundo complejo.
+	 * Crea una celula mediante la clase controlador y dependiendo de su
+	 * complejidad se crea una celula en un mundo simple o en un mundo complejo.
 	 */
 
 	public void ejecuta(Controlador controlador) {
@@ -42,7 +42,7 @@ public class CrearCelula implements Comando {
 		else
 			this.ejecutaComplejo(controlador);
 	}
-	
+
 	/**
 	 * Comprueba si la cadena coincide con el comando crear celula.
 	 */
@@ -80,7 +80,8 @@ public class CrearCelula implements Comando {
 			}
 			Casilla casilla = new Casilla(this.fila, this.columna);
 			controlador.crearCelula(casilla, celula);
-			System.out.println("Creando celula " + caracteristica + " en " + casilla + "...");
+			System.out.println("Creando celula " + caracteristica + " en "
+					+ casilla + "...");
 		} catch (IndicesFueraDeRango e1) {
 			System.out.println(e1);
 		} catch (FormatoNumericoIncorrecto e2) {
@@ -103,7 +104,8 @@ public class CrearCelula implements Comando {
 		}
 	}
 
-	private void parseaParametros(String[] cadenaComando) throws FormatoNumericoIncorrecto {
+	private void parseaParametros(String[] cadenaComando)
+			throws FormatoNumericoIncorrecto {
 		try {
 			this.fila = Integer.parseInt(cadenaComando[1]);
 			this.columna = Integer.parseInt(cadenaComando[2]);

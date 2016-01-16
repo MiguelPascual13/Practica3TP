@@ -16,7 +16,7 @@ import pr3.logica.Casilla;
 public class EliminarCelula implements Comando {
 	private int fila;
 	private int columna;
-	
+
 	/**
 	 * Contructora de eliminar celula asignandole 0 a fila y colmna.
 	 */
@@ -25,9 +25,10 @@ public class EliminarCelula implements Comando {
 		this.fila = 0;
 		this.columna = 0;
 	}
-	
+
 	/**
-	 * Elimina una celula mediante la clase controlador en la posicion especificada.
+	 * Elimina una celula mediante la clase controlador en la posicion
+	 * especificada.
 	 */
 
 	public void ejecuta(Controlador controlador) {
@@ -46,7 +47,7 @@ public class EliminarCelula implements Comando {
 	/**
 	 * Comprueba si la cadena coincide con el comando eliminar celula.
 	 */
-	
+
 	public Comando parsea(String[] cadenaComando) throws ErrorComando {
 		Comando comando = null;
 		if (cadenaComando.length >= 3) {
@@ -67,7 +68,8 @@ public class EliminarCelula implements Comando {
 		return "ELIMINARCELULA f c:\tElimina la Celula de la casilla especificada por parametro.\n";
 	}
 
-	private void parseaParametros(String[] cadenaComando) throws FormatoNumericoIncorrecto {
+	private void parseaParametros(String[] cadenaComando)
+			throws FormatoNumericoIncorrecto {
 		try {
 			this.fila = Integer.parseInt(cadenaComando[1]);
 			this.columna = Integer.parseInt(cadenaComando[2]);

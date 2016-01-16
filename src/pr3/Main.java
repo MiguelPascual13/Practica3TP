@@ -19,9 +19,9 @@ public class Main {
 	 * 
 	 * @param args
 	 * 
-	 * 	Argumento por el momento en desuso.
+	 *            Argumento por el momento en desuso.
 	 */
-	
+
 	public static void main(String[] args) {
 		try {
 			MundoSimple mundo = new MundoSimple(3, 3, 3);

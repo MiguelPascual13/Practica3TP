@@ -10,8 +10,9 @@ import pr3.logica.Superficie;
 
 /**
  * 
- * Clase celula compleja que implementa a la clase celula. Se encarga de gestionar 
- * todo el tema relacionado con las leyes que rigen a una celula compleja.
+ * Clase celula compleja que implementa a la clase celula. Se encarga de
+ * gestionar todo el tema relacionado con las leyes que rigen a una celula
+ * compleja.
  *
  */
 
@@ -19,10 +20,10 @@ public class CelulaCompleja implements Celula {
 	public static final int MAX_COMIDAS = 3;
 	private int celulasComidas;
 	private boolean esComestible;
-	
+
 	/**
-	 * Contructora para celula compleja asignandole un valor
-	 * a celulas comidas y tambien indicar que no es comestible. 
+	 * Contructora para celula compleja asignandole un valor a celulas comidas y
+	 * tambien indicar que no es comestible.
 	 */
 
 	public CelulaCompleja() {
@@ -33,9 +34,10 @@ public class CelulaCompleja implements Celula {
 	public String toString() {
 		return "*";
 	}
-	
+
 	/**
-	 * Se encarga de cargar del fichero el dato correspondiente a una celula compleja.
+	 * Se encarga de cargar del fichero el dato correspondiente a una celula
+	 * compleja.
 	 */
 
 	public void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
@@ -45,13 +47,15 @@ public class CelulaCompleja implements Celula {
 			throw new FormatoNumericoIncorrecto();
 		}
 	}
-	
+
 	/**
-	 * Se encarga de guardar en el fichero el dato correspondiente a una celula compleja.
+	 * Se encarga de guardar en el fichero el dato correspondiente a una celula
+	 * compleja.
 	 */
 
 	public void guardar(FileWriter fich) throws IOException {
-		fich.write("compleja " + this.celulasComidas + "\n");
+		fich.write("compleja " + this.celulasComidas
+				+ System.getProperty("line.separator"));
 	}
 
 	public boolean esComestible() {
@@ -59,11 +63,10 @@ public class CelulaCompleja implements Celula {
 	}
 
 	/**
-	 * Se encarga de gestionar todo el movimiento de una celula compleja,
-	 * recibe una casilla origen por parametro y si se puede mover 
-	 * se mueve. 
+	 * Se encarga de gestionar todo el movimiento de una celula compleja, recibe
+	 * una casilla origen por parametro y si se puede mover se mueve.
 	 */
-	
+
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
 		Casilla destino = null;
 		boolean come = false;
@@ -93,12 +96,14 @@ public class CelulaCompleja implements Celula {
 		return destino;
 	}
 
-	private void movimiento(Casilla origen, Casilla destino, Superficie superficie) throws IndicesFueraDeRango {
+	private void movimiento(Casilla origen, Casilla destino,
+			Superficie superficie) throws IndicesFueraDeRango {
 		superficie.setCasilla(destino, this);
 		superficie.vaciarCasilla(origen);
 	}
 
-	private void muerte(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
+	private void muerte(Casilla casilla, Superficie superficie)
+			throws IndicesFueraDeRango {
 		superficie.vaciarCasilla(casilla);
 	}
 
@@ -106,7 +111,8 @@ public class CelulaCompleja implements Celula {
 		this.celulasComidas++;
 	}
 
-	private void mensajes(Casilla origen, Casilla destino, boolean come, boolean explota, boolean mueve) {
+	private void mensajes(Casilla origen, Casilla destino, boolean come,
+			boolean explota, boolean mueve) {
 		if (mueve) {
 			System.out.println("COMPLEJA de " + origen + " a " + destino);
 			if (come) {

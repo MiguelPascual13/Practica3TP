@@ -7,9 +7,10 @@ import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
+
 /**
  * 
- * Clase celula simple que implementa a la clase celula. Se encarga de gestionar 
+ * Clase celula simple que implementa a la clase celula. Se encarga de gestionar
  * todo el tema relacionado con las leyes que rigen a una celula simple.
  *
  */
@@ -23,10 +24,10 @@ public class CelulaSimple implements Celula {
 	private boolean esComestible;
 
 	/**
-	 * Contructora para celula simple asignandole un valor
-	 * a pasos dados, pasos sin mover y tambien indica si es comestible. 
+	 * Contructora para celula simple asignandole un valor a pasos dados, pasos
+	 * sin mover y tambien indica si es comestible.
 	 */
-	
+
 	public CelulaSimple() {
 		this.pasosDados = 0;
 		this.pasosSinMover = 0;
@@ -38,9 +39,10 @@ public class CelulaSimple implements Celula {
 	}
 
 	/**
-	 * Se encarga de cargar del fichero los datos correspondientes a una celula simple.
+	 * Se encarga de cargar del fichero los datos correspondientes a una celula
+	 * simple.
 	 */
-	
+
 	public void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
 		try {
 			this.pasosDados = Integer.parseInt(cadenaLinea[3]);
@@ -51,21 +53,23 @@ public class CelulaSimple implements Celula {
 	}
 
 	/**
-	 * Se encarga de guardar en el fichero los datos correspondientes a una celula simple.
+	 * Se encarga de guardar en el fichero los datos correspondientes a una
+	 * celula simple.
 	 */
-	
+
 	public void guardar(FileWriter fich) throws IOException {
-		fich.write("simple " + this.pasosDados + " " + this.pasosSinMover + "\n");
+		fich.write("simple " + this.pasosDados + " " + this.pasosSinMover
+				+ System.getProperty("line.separator"));
 	}
-	
+
 	public boolean esComestible() {
 		return esComestible;
 	}
-	
+
 	/**
-	 * Se encarga de gestionar todo el movimiento de una celula simple,
-	 * recibe una casilla origen por parametro y comprueba si se puede mover 
-	 * y de ser asi se mueve. 
+	 * Se encarga de gestionar todo el movimiento de una celula simple, recibe
+	 * una casilla origen por parametro y comprueba si se puede mover y de ser
+	 * asi se mueve.
 	 */
 
 	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
@@ -92,7 +96,8 @@ public class CelulaSimple implements Celula {
 					this.muere(origen, superficie);
 				}
 			}
-			this.mensajes(origen, destino, mueve, reproduce, muereInactividad, muereIrreproducibilidad);
+			this.mensajes(origen, destino, mueve, reproduce, muereInactividad,
+					muereIrreproducibilidad);
 		} catch (IndicesFueraDeRango e) {
 			System.out.println(e);
 		}
@@ -116,21 +121,24 @@ public class CelulaSimple implements Celula {
 		return destino;
 	}
 
-	private void movimiento(Casilla origen, Casilla destino, Superficie superficie) throws IndicesFueraDeRango {
+	private void movimiento(Casilla origen, Casilla destino,
+			Superficie superficie) throws IndicesFueraDeRango {
 		superficie.setCasilla(destino, this);
 		superficie.vaciarCasilla(origen);
 	}
 
-	private void reproduce(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
+	private void reproduce(Casilla casilla, Superficie superficie)
+			throws IndicesFueraDeRango {
 		superficie.setCasilla(casilla, new CelulaSimple());
 	}
 
-	private void muere(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
+	private void muere(Casilla casilla, Superficie superficie)
+			throws IndicesFueraDeRango {
 		superficie.vaciarCasilla(casilla);
 	}
 
-	private void seleccionarCandidatas(Casilla origen, Superficie superficie, VectorMov entorno)
-			throws IndicesFueraDeRango {
+	private void seleccionarCandidatas(Casilla origen, Superficie superficie,
+			VectorMov entorno) throws IndicesFueraDeRango {
 		for (int i = origen.getFila() - 1; i <= origen.getFila() + 1; i++) {
 			for (int j = origen.getColumna() - 1; j <= origen.getColumna() + 1; j++) {
 				if (superficie.enRango(i, j) && superficie.esVacia(i, j)) {
@@ -152,18 +160,22 @@ public class CelulaSimple implements Celula {
 		return this.pasosSinMover >= MAX_PASOS_SIN_MOVER + 1;
 	}
 
-	private void mensajes(Casilla origen, Casilla destino, boolean mueve, boolean reproduce, boolean muereInactividad,
+	private void mensajes(Casilla origen, Casilla destino, boolean mueve,
+			boolean reproduce, boolean muereInactividad,
 			boolean muereIrreproducibilidad) {
 		if (mueve) {
 			System.out.println("SIMPLE de " + origen + " a " + destino);
 			if (reproduce)
-				System.out.println("NACE SIMPLE EN " + origen + " (PADRE " + destino + " )");
+				System.out.println("NACE SIMPLE EN " + origen + " (PADRE "
+						+ destino + " )");
 		} else {
 			System.out.println("SIMPLE de " + origen + " NO SE MUEVE");
 			if (muereInactividad)
-				System.out.println("MUERE SIMPLE EN " + origen + " POR INACTIVIDAD");
+				System.out.println("MUERE SIMPLE EN " + origen
+						+ " POR INACTIVIDAD");
 			else if (muereIrreproducibilidad)
-				System.out.println("MUERE SIMPLE EN " + origen + " POR IRREPRODUCIBILIDAD");
+				System.out.println("MUERE SIMPLE EN " + origen
+						+ " POR IRREPRODUCIBILIDAD");
 		}
 	}
 }
