@@ -7,6 +7,7 @@ import java.util.Scanner;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.excepciones.PalabraIncorrecta;
+import pr3.excepciones.PosicionNoVacia;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
 import pr3.logica.celula.Celula;
@@ -66,10 +67,8 @@ public abstract class Mundo {
 	 *             del rango de la superficie.
 	 */
 
-	public void guardar(FileWriter fich) throws IOException,
-			IndicesFueraDeRango {
-		fich.write(this.getComplejidad() + this.filas
-				+ System.getProperty("line.separator") + this.columnas
+	public void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango {
+		fich.write(this.getComplejidad() + this.filas + System.getProperty("line.separator") + this.columnas
 				+ System.getProperty("line.separator"));
 		this.superficie.guardar(fich);
 	}
@@ -91,8 +90,8 @@ public abstract class Mundo {
 	 *             string incorrecto con lo que deberia ser.
 	 */
 
-	public void cargar(Scanner fich) throws IndicesFueraDeRango,
-			FormatoNumericoIncorrecto, PalabraIncorrecta {
+	public void cargar(Scanner fich)
+			throws IndicesFueraDeRango, FormatoNumericoIncorrecto, PalabraIncorrecta, PosicionNoVacia {
 		this.cargarDimension(fich);
 		this.superficie = new Superficie(this.filas, this.columnas);
 		this.superficie.cargar(fich);
@@ -123,10 +122,8 @@ public abstract class Mundo {
 	 *             de rango.
 	 */
 
-	public boolean crearCelula(Casilla casilla, Celula celula)
-			throws IndicesFueraDeRango {
-		return this
-				.crearCelula(casilla.getFila(), casilla.getColumna(), celula);
+	public boolean crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
+		return this.crearCelula(casilla.getFila(), casilla.getColumna(), celula);
 	}
 
 	/**
@@ -142,8 +139,7 @@ public abstract class Mundo {
 	 *             de rango.
 	 */
 
-	public boolean crearCelula(int fila, int columna, Celula celula)
-			throws IndicesFueraDeRango {
+	public boolean crearCelula(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
 		boolean sinErrores = true;
 		if (superficie.esVacia(fila, columna)) {
 			superficie.setCasilla(fila, columna, celula);
@@ -180,8 +176,7 @@ public abstract class Mundo {
 	 *             de rango.
 	 */
 
-	public boolean eliminarCelula(int fila, int columna)
-			throws IndicesFueraDeRango {
+	public boolean eliminarCelula(int fila, int columna) throws IndicesFueraDeRango {
 		boolean sinErrores = true;
 		if (!superficie.esVacia(fila, columna)) {
 			superficie.vaciarCasilla(fila, columna);
@@ -196,8 +191,7 @@ public abstract class Mundo {
 
 	public void evoluciona() {
 		try {
-			boolean[][] movidas = new boolean[superficie.getFilas()][superficie
-					.getColumnas()];
+			boolean[][] movidas = new boolean[superficie.getFilas()][superficie.getColumnas()];
 			inicializarMovidas(movidas);
 			for (int i = 0; i < superficie.getFilas(); i++) {
 				for (int j = 0; j < superficie.getColumnas(); j++) {

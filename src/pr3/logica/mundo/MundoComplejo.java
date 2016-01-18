@@ -30,8 +30,7 @@ public class MundoComplejo extends Mundo {
 	 *             inicializacion.
 	 */
 
-	public MundoComplejo(int filas, int columnas, int simples, int complejas)
-			throws ErrorDeInicializacion {
+	public MundoComplejo(int filas, int columnas, int simples, int complejas) throws ErrorDeInicializacion {
 		super(filas, columnas);
 		if (filas * columnas < simples + complejas)
 			throw new ErrorDeInicializacion();
@@ -83,6 +82,6 @@ public class MundoComplejo extends Mundo {
 	}
 
 	protected String getComplejidad() {
-		return "complejo\n";
+		return "complejo" + System.getProperty("line.separator");
 	}
 }

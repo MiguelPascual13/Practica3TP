@@ -77,6 +77,8 @@ public class Controlador {
 			System.out.println("ERROR: No se Encontró el Fichero.");
 		} catch (PalabraIncorrecta e4) {
 			System.out.println(e4);
+		} catch (PosicionNoVacia e5) {
+			System.out.println(e5);
 		} finally {
 			if (fich != null)
 				fich.close();
@@ -207,8 +209,7 @@ public class Controlador {
 	 *             celula en su interior.
 	 */
 
-	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango,
-			PosicionVacia {
+	public void eliminarCelula(Casilla casilla) throws IndicesFueraDeRango, PosicionVacia {
 		if (!this.mundo.eliminarCelula(casilla))
 			throw new PosicionVacia();
 	}
@@ -230,8 +231,7 @@ public class Controlador {
 	 *             celula en su interior.
 	 */
 
-	public void crearCelula(Casilla casilla, Celula celula)
-			throws IndicesFueraDeRango, PosicionNoVacia {
+	public void crearCelula(Casilla casilla, Celula celula) throws IndicesFueraDeRango, PosicionNoVacia {
 		if (!this.mundo.crearCelula(casilla, celula))
 			throw new PosicionNoVacia();
 	}

@@ -7,6 +7,7 @@ import java.util.Scanner;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.excepciones.PalabraIncorrecta;
+import pr3.excepciones.PosicionNoVacia;
 import pr3.logica.celula.Celula;
 import pr3.logica.celula.CelulaCompleja;
 import pr3.logica.celula.CelulaSimple;
@@ -81,8 +82,7 @@ public class Superficie {
 	 */
 
 	public Casilla ejecutaMovimiento(Casilla casilla) {
-		Casilla destino = this.tablero[casilla.getFila()][casilla.getColumna()]
-				.ejecutaMovimiento(casilla, this);
+		Casilla destino = this.tablero[casilla.getFila()][casilla.getColumna()].ejecutaMovimiento(casilla, this);
 		return destino;
 	}
 
@@ -105,8 +105,7 @@ public class Superficie {
 	 *             rango de la superficie.
 	 */
 
-	public boolean getComestibilidad(Casilla casilla)
-			throws IndicesFueraDeRango {
+	public boolean getComestibilidad(Casilla casilla) throws IndicesFueraDeRango {
 		return this.getComestibilidad(casilla.getFila(), casilla.getColumna());
 	}
 
@@ -121,8 +120,7 @@ public class Superficie {
 	 *             rango de la superficie.
 	 */
 
-	public boolean getComestibilidad(int fila, int columna)
-			throws IndicesFueraDeRango {
+	public boolean getComestibilidad(int fila, int columna) throws IndicesFueraDeRango {
 		if (!this.enRango(fila, columna))
 			throw new IndicesFueraDeRango();
 		return tablero[fila][columna].esComestible();
@@ -203,9 +201,8 @@ public class Superficie {
 	 *             rango de la superficie.
 	 */
 
-	public void setCasilla(Casilla casilla, Celula celula)
-			throws IndicesFueraDeRango {
-		this.setCasilla(casilla.getFila(), casilla.getColumna(), celula);
+	public boolean setCasilla(Casilla casilla, Celula celula) throws IndicesFueraDeRango {
+		return this.setCasilla(casilla.getFila(), casilla.getColumna(), celula);
 	}
 
 	/**
@@ -220,11 +217,15 @@ public class Superficie {
 	 *             rango de la superficie.
 	 */
 
-	public void setCasilla(int fila, int columna, Celula celula)
-			throws IndicesFueraDeRango {
+	public boolean setCasilla(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
+		boolean vacia = true;
 		if (!this.enRango(fila, columna))
 			throw new IndicesFueraDeRango();
-		this.tablero[fila][columna] = celula;
+		else if (!this.esVacia(fila, columna))
+			vacia = false;
+		else
+			this.tablero[fila][columna] = celula;
+		return vacia;
 	}
 
 	public String toString() {
@@ -262,25 +263,24 @@ public class Superficie {
 	 *             scanner no sea del formato correcto.
 	 */
 
-	public void cargar(Scanner fich) throws IndicesFueraDeRango,
-			PalabraIncorrecta, FormatoNumericoIncorrecto {
+	public void cargar(Scanner fich)
+			throws IndicesFueraDeRango, PalabraIncorrecta, FormatoNumericoIncorrecto, PosicionNoVacia {
 		Celula celula = null;
 		while (fich.hasNextLine()) {
 			String linea = fich.nextLine();
 			String[] cadenaLinea = linea.split(" ");
 			if (cadenaLinea.length >= 4) {
 				Casilla casilla = this.parseaCasilla(cadenaLinea);
-				if (cadenaLinea[2].equalsIgnoreCase("simple")
-						&& cadenaLinea.length == 5) {
+				if (cadenaLinea[2].equalsIgnoreCase("simple") && cadenaLinea.length == 5) {
 					celula = new CelulaSimple();
-				} else if (cadenaLinea[2].equalsIgnoreCase("compleja")
-						&& cadenaLinea.length == 4) {
+				} else if (cadenaLinea[2].equalsIgnoreCase("compleja") && cadenaLinea.length == 4) {
 					celula = new CelulaCompleja();
 				} else {
 					throw new PalabraIncorrecta();
 				}
 				celula.cargar(cadenaLinea);
-				this.setCasilla(casilla, celula);
+				if (!this.setCasilla(casilla, celula))
+					throw new PosicionNoVacia();
 			} else
 				throw new PalabraIncorrecta();
 		}
@@ -297,8 +297,7 @@ public class Superficie {
 	 *             de rango.
 	 */
 
-	public void guardar(FileWriter fich) throws IOException,
-			IndicesFueraDeRango {
+	public void guardar(FileWriter fich) throws IOException, IndicesFueraDeRango {
 		for (int i = 0; i < this.filas; i++) {
 			for (int j = 0; j < this.columnas; j++) {
 				if (!this.esVacia(i, j)) {
@@ -309,8 +308,7 @@ public class Superficie {
 		}
 	}
 
-	private Casilla parseaCasilla(String[] cadenaLinea)
-			throws FormatoNumericoIncorrecto {
+	private Casilla parseaCasilla(String[] cadenaLinea) throws FormatoNumericoIncorrecto {
 		Casilla casilla = null;
 		try {
 			int fila = Integer.parseInt(cadenaLinea[0]);

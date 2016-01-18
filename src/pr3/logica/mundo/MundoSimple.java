@@ -26,8 +26,7 @@ public class MundoSimple extends Mundo {
 	 *             inicializacion.
 	 */
 
-	public MundoSimple(int filas, int columnas, int simples)
-			throws ErrorDeInicializacion {
+	public MundoSimple(int filas, int columnas, int simples) throws ErrorDeInicializacion {
 		super(filas, columnas);
 		if (this.filas * this.columnas < simples)
 			throw new ErrorDeInicializacion();
@@ -68,6 +67,6 @@ public class MundoSimple extends Mundo {
 	}
 
 	protected String getComplejidad() {
-		return "simple\n";
+		return "simple" + System.getProperty("line.separator");
 	}
 }
