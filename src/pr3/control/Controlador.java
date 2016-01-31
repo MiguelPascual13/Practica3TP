@@ -9,6 +9,7 @@ import java.util.Scanner;
 import pr3.control.comandos.Comando;
 import pr3.excepciones.ComandoNoExistente;
 import pr3.excepciones.ErrorComando;
+import pr3.excepciones.ErrorDeInicializacion;
 import pr3.excepciones.FormatoNumericoIncorrecto;
 import pr3.excepciones.IndicesFueraDeRango;
 import pr3.excepciones.PalabraIncorrecta;
@@ -32,6 +33,8 @@ public class Controlador {
 	private Mundo mundo;
 	private Scanner in;
 	private boolean simulacionTerminada;
+	private FileWriter fichero;
+	private Scanner fich;
 
 	/**
 	 * Constructora con parametros.
@@ -61,28 +64,14 @@ public class Controlador {
 	 * 
 	 */
 
-	public void cargar(String nombreFichero) {
+	public void cargar(String nombreFichero) throws FileNotFoundException, PalabraIncorrecta, FormatoNumericoIncorrecto,
+			IndicesFueraDeRango, PosicionNoVacia {
 		File fichero = new File(nombreFichero);
-		Scanner fich = null;
-		try {
-			fich = new Scanner(fichero);
-			Mundo mundoCargar = this.getComplejidad(fich);
-			mundoCargar.cargar(fich);
-			this.mundo = mundoCargar;
-		} catch (FormatoNumericoIncorrecto e1) {
-			System.out.println(e1);
-		} catch (IndicesFueraDeRango e2) {
-			System.out.println(e2);
-		} catch (FileNotFoundException e3) {
-			System.out.println("ERROR: No se Encontró el Fichero.");
-		} catch (PalabraIncorrecta e4) {
-			System.out.println(e4);
-		} catch (PosicionNoVacia e5) {
-			System.out.println(e5);
-		} finally {
-			if (fich != null)
-				fich.close();
-		}
+		this.fich = null;
+		fich = new Scanner(fichero);
+		Mundo mundoCargar = this.getComplejidad(fich);
+		mundoCargar.cargar(fich);
+		this.mundo = mundoCargar;
 	}
 
 	/**
@@ -95,23 +84,10 @@ public class Controlador {
 	 *            Nombre del fichero en el que se desea guardar el juego.
 	 */
 
-	public void guardar(String nombreFichero) {
-		FileWriter fichero = null;
-		try {
-			fichero = new FileWriter(nombreFichero);
-			this.mundo.guardar(fichero);
-		} catch (IndicesFueraDeRango e1) {
-			System.out.println(e1);
-		} catch (IOException e2) {
-			System.out.println(e2);
-		} finally {
-			if (fichero != null)
-				try {
-					fichero.close();
-				} catch (IOException e) {
-					System.out.println("ERROR: No se Pudo Cerrar el Fichero.");
-				}
-		}
+	public void guardar(String nombreFichero) throws IndicesFueraDeRango, IOException {
+		this.fichero = null;
+		fichero = new FileWriter(nombreFichero);
+		this.mundo.guardar(fichero);
 	}
 
 	/**
@@ -131,9 +107,34 @@ public class Controlador {
 				Comando comando = ParserComandos.parseaComando(words);
 				comando.ejecuta(this);
 			} catch (ErrorComando e1) {
-
 			} catch (ComandoNoExistente e2) {
 				System.out.println(e2);
+			} catch (ErrorDeInicializacion e3) {
+				System.out.println(e3);
+			} catch (PalabraIncorrecta e4) {
+				System.out.println(e4);
+			} catch (PosicionNoVacia e5) {
+				System.out.println(e5);
+			} catch (PosicionVacia e6) {
+				System.out.println(e6);
+			} catch (IndicesFueraDeRango e7) {
+				System.out.println(e7);
+			} catch (FormatoNumericoIncorrecto e8) {
+				System.out.println(e8);
+			} catch (FileNotFoundException e9) {
+				System.out.println("ERROR: No se pudo encontrar el archivo.");
+			} catch (IOException e10) {
+				System.out.println("ERROR: Error de entrada-salida.");
+			} finally {
+				if (fich != null)
+					fich.close();
+				if (fichero != null) {
+					try {
+						fichero.close();
+					} catch (IOException e) {
+						System.out.println("ERROR: No se Pudo Cerrar el Fichero.");
+					}
+				}
 			}
 			if (!this.simulacionTerminada) {
 				System.out.println(mundo);
@@ -182,7 +183,7 @@ public class Controlador {
 	 * que eso conlleva.
 	 */
 
-	public void evoluciona() {
+	public void evoluciona() throws IndicesFueraDeRango {
 		this.mundo.evoluciona();
 	}
 
@@ -190,7 +191,7 @@ public class Controlador {
 	 * Inicializa el mundo correspondiente.
 	 */
 
-	public void inicializar() {
+	public void inicializar() throws IndicesFueraDeRango {
 		this.mundo.inicializaMundo();
 	}
 

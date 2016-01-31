@@ -52,7 +52,7 @@ public abstract class Mundo {
 	 * Metodo abstracto que se implementara en las correspondientes clases
 	 * hijas. Se encarga de inicializar el mundo correspondiente.
 	 */
-	public abstract void inicializaMundo();
+	public abstract void inicializaMundo() throws IndicesFueraDeRango;
 
 	/**
 	 * Se encarga de guardar en el fichero la correspondiente información del
@@ -189,25 +189,21 @@ public abstract class Mundo {
 	 * Se encarga de gestionar un ciclo vital del mundo que se este jugando.
 	 */
 
-	public void evoluciona() {
-		try {
-			boolean[][] movidas = new boolean[superficie.getFilas()][superficie.getColumnas()];
-			inicializarMovidas(movidas);
-			for (int i = 0; i < superficie.getFilas(); i++) {
-				for (int j = 0; j < superficie.getColumnas(); j++) {
-					Casilla casilla = new Casilla(i, j);
-					if (!superficie.esVacia(i, j) && !movidas[i][j]) {
-						moverCelula(casilla, movidas);
-					}
+	public void evoluciona() throws IndicesFueraDeRango {
+		boolean[][] movidas = new boolean[superficie.getFilas()][superficie.getColumnas()];
+		inicializarMovidas(movidas);
+		for (int i = 0; i < superficie.getFilas(); i++) {
+			for (int j = 0; j < superficie.getColumnas(); j++) {
+				Casilla casilla = new Casilla(i, j);
+				if (!superficie.esVacia(i, j) && !movidas[i][j]) {
+					moverCelula(casilla, movidas);
 				}
 			}
-			System.out.println();
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
 		}
+		System.out.println();
 	}
 
-	private void moverCelula(Casilla casilla, boolean movidas[][]) {
+	private void moverCelula(Casilla casilla, boolean movidas[][]) throws IndicesFueraDeRango {
 		Casilla destino = superficie.ejecutaMovimiento(casilla);
 		if (destino != null)
 			movidas[destino.getFila()][destino.getColumna()] = true;

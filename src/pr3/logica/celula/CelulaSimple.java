@@ -58,8 +58,7 @@ public class CelulaSimple implements Celula {
 	 */
 
 	public void guardar(FileWriter fich) throws IOException {
-		fich.write("simple " + this.pasosDados + " " + this.pasosSinMover
-				+ System.getProperty("line.separator"));
+		fich.write("simple " + this.pasosDados + " " + this.pasosSinMover + System.getProperty("line.separator"));
 	}
 
 	public boolean esComestible() {
@@ -72,35 +71,30 @@ public class CelulaSimple implements Celula {
 	 * asi se mueve.
 	 */
 
-	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
+	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) throws IndicesFueraDeRango {
 		Casilla destino = null;
 		VectorMov entorno = new VectorMov();
 		boolean mueve = false;
 		boolean reproduce = false;
 		boolean muereInactividad = false;
 		boolean muereIrreproducibilidad = false;
-		try {
-			this.seleccionarCandidatas(origen, superficie, entorno);
-			this.aumentarPasosDados();
-			if (mueve = this.seMueve(entorno)) {
-				destino = this.elegirCandidata(entorno);
-				this.movimiento(origen, destino, superficie);
-				if (reproduce = this.seReproduce()) {
-					this.reproduce(origen, superficie);
-				}
-			} else {
-				this.aumentarPasosSinMover();
-				if (muereInactividad = this.inactividadMaxima()) {
-					this.muere(origen, superficie);
-				} else if (muereIrreproducibilidad = this.seReproduce()) {
-					this.muere(origen, superficie);
-				}
+		this.seleccionarCandidatas(origen, superficie, entorno);
+		this.aumentarPasosDados();
+		if (mueve = this.seMueve(entorno)) {
+			destino = this.elegirCandidata(entorno);
+			this.movimiento(origen, destino, superficie);
+			if (reproduce = this.seReproduce()) {
+				this.reproduce(origen, superficie);
 			}
-			this.mensajes(origen, destino, mueve, reproduce, muereInactividad,
-					muereIrreproducibilidad);
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
+		} else {
+			this.aumentarPasosSinMover();
+			if (muereInactividad = this.inactividadMaxima()) {
+				this.muere(origen, superficie);
+			} else if (muereIrreproducibilidad = this.seReproduce()) {
+				this.muere(origen, superficie);
+			}
 		}
+		this.mensajes(origen, destino, mueve, reproduce, muereInactividad, muereIrreproducibilidad);
 		return destino;
 	}
 
@@ -121,24 +115,21 @@ public class CelulaSimple implements Celula {
 		return destino;
 	}
 
-	private void movimiento(Casilla origen, Casilla destino,
-			Superficie superficie) throws IndicesFueraDeRango {
+	private void movimiento(Casilla origen, Casilla destino, Superficie superficie) throws IndicesFueraDeRango {
 		superficie.setCasilla(destino, this);
 		superficie.vaciarCasilla(origen);
 	}
 
-	private void reproduce(Casilla casilla, Superficie superficie)
-			throws IndicesFueraDeRango {
+	private void reproduce(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
 		superficie.setCasilla(casilla, new CelulaSimple());
 	}
 
-	private void muere(Casilla casilla, Superficie superficie)
-			throws IndicesFueraDeRango {
+	private void muere(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
 		superficie.vaciarCasilla(casilla);
 	}
 
-	private void seleccionarCandidatas(Casilla origen, Superficie superficie,
-			VectorMov entorno) throws IndicesFueraDeRango {
+	private void seleccionarCandidatas(Casilla origen, Superficie superficie, VectorMov entorno)
+			throws IndicesFueraDeRango {
 		for (int i = origen.getFila() - 1; i <= origen.getFila() + 1; i++) {
 			for (int j = origen.getColumna() - 1; j <= origen.getColumna() + 1; j++) {
 				if (superficie.enRango(i, j) && superficie.esVacia(i, j)) {
@@ -160,22 +151,18 @@ public class CelulaSimple implements Celula {
 		return this.pasosSinMover >= MAX_PASOS_SIN_MOVER + 1;
 	}
 
-	private void mensajes(Casilla origen, Casilla destino, boolean mueve,
-			boolean reproduce, boolean muereInactividad,
+	private void mensajes(Casilla origen, Casilla destino, boolean mueve, boolean reproduce, boolean muereInactividad,
 			boolean muereIrreproducibilidad) {
 		if (mueve) {
 			System.out.println("SIMPLE de " + origen + " a " + destino);
 			if (reproduce)
-				System.out.println("NACE SIMPLE EN " + origen + " (PADRE "
-						+ destino + " )");
+				System.out.println("NACE SIMPLE EN " + origen + " (PADRE " + destino + " )");
 		} else {
 			System.out.println("SIMPLE de " + origen + " NO SE MUEVE");
 			if (muereInactividad)
-				System.out.println("MUERE SIMPLE EN " + origen
-						+ " POR INACTIVIDAD");
+				System.out.println("MUERE SIMPLE EN " + origen + " POR INACTIVIDAD");
 			else if (muereIrreproducibilidad)
-				System.out.println("MUERE SIMPLE EN " + origen
-						+ " POR IRREPRODUCIBILIDAD");
+				System.out.println("MUERE SIMPLE EN " + origen + " POR IRREPRODUCIBILIDAD");
 		}
 	}
 }

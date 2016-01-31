@@ -81,7 +81,7 @@ public class Superficie {
 	 * @return Devuelve la casilla de destino.
 	 */
 
-	public Casilla ejecutaMovimiento(Casilla casilla) {
+	public Casilla ejecutaMovimiento(Casilla casilla) throws IndicesFueraDeRango {
 		Casilla destino = this.tablero[casilla.getFila()][casilla.getColumna()].ejecutaMovimiento(casilla, this);
 		return destino;
 	}
@@ -216,15 +216,13 @@ public class Superficie {
 	 *             Lanza una excepcion en caso de que la casilla esta fuera de
 	 *             rango de la superficie.
 	 */
-
 	public boolean setCasilla(int fila, int columna, Celula celula) throws IndicesFueraDeRango {
 		boolean vacia = true;
 		if (!this.enRango(fila, columna))
 			throw new IndicesFueraDeRango();
 		else if (!this.esVacia(fila, columna))
 			vacia = false;
-		else
-			this.tablero[fila][columna] = celula;
+		this.tablero[fila][columna] = celula;
 		return vacia;
 	}
 

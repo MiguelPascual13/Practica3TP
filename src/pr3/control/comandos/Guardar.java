@@ -1,6 +1,9 @@
 package pr3.control.comandos;
 
+import java.io.IOException;
+
 import pr3.control.Controlador;
+import pr3.excepciones.IndicesFueraDeRango;
 
 public class Guardar implements Comando {
 
@@ -10,7 +13,7 @@ public class Guardar implements Comando {
 	 * Guarda el mundo en juego, en un fichero.
 	 */
 
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador) throws IndicesFueraDeRango, IOException {
 		System.out.println("Guardando mundo...");
 		controlador.guardar(this.nombreFichero);
 	}

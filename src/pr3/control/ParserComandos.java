@@ -21,9 +21,8 @@ import pr3.excepciones.ErrorComando;
  */
 
 public class ParserComandos {
-	private static Comando[] comandos = { new Ayuda(), new Cargar(),
-			new CrearCelula(), new EliminarCelula(), new Guardar(),
-			new Iniciar(), new Jugar(), new Paso(), new Salir(), new Vaciar() };
+	private static Comando[] comandos = { new Ayuda(), new Cargar(), new CrearCelula(), new EliminarCelula(),
+			new Guardar(), new Iniciar(), new Jugar(), new Paso(), new Salir(), new Vaciar() };
 
 	/**
 	 * Encargada de crear un string con todos los textos de ayuda de cada uno de
@@ -57,8 +56,7 @@ public class ParserComandos {
 	 *             desea parsear no existe.
 	 */
 
-	static public Comando parseaComando(String[] cadenas) throws ErrorComando,
-			ComandoNoExistente {
+	static public Comando parseaComando(String[] cadenas) throws ErrorComando, ComandoNoExistente {
 		Comando comando = null;
 		boolean encontrado = false;
 		int i = 0;

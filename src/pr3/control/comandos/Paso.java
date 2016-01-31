@@ -1,6 +1,7 @@
 package pr3.control.comandos;
 
 import pr3.control.Controlador;
+import pr3.excepciones.IndicesFueraDeRango;
 
 public class Paso implements Comando {
 
@@ -9,7 +10,7 @@ public class Paso implements Comando {
 	 * controlador.
 	 */
 
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador) throws IndicesFueraDeRango {
 		System.out.println("Evolucionando...");
 		controlador.evoluciona();
 	}

@@ -30,7 +30,8 @@ public class MundoComplejo extends Mundo {
 	 *             inicializacion.
 	 */
 
-	public MundoComplejo(int filas, int columnas, int simples, int complejas) throws ErrorDeInicializacion {
+	public MundoComplejo(int filas, int columnas, int simples, int complejas)
+			throws ErrorDeInicializacion, IndicesFueraDeRango {
 		super(filas, columnas);
 		if (filas * columnas < simples + complejas)
 			throw new ErrorDeInicializacion();
@@ -55,29 +56,25 @@ public class MundoComplejo extends Mundo {
 	 * excepcion de indices fuera de rango.
 	 */
 
-	public void inicializaMundo() {
+	public void inicializaMundo() throws IndicesFueraDeRango {
 		this.vaciar();
-		try {
-			for (int i = 0; i < this.simples; i++) {
-				int fila = (int) (Math.random() * superficie.getFilas());
-				int columna = (int) (Math.random() * superficie.getColumnas());
+		for (int i = 0; i < this.simples; i++) {
+			int fila = (int) (Math.random() * superficie.getFilas());
+			int columna = (int) (Math.random() * superficie.getColumnas());
 
-				while (!crearCelula(fila, columna, new CelulaSimple())) {
-					fila = (int) (Math.random() * superficie.getFilas());
-					columna = (int) (Math.random() * superficie.getColumnas());
-				}
+			while (!crearCelula(fila, columna, new CelulaSimple())) {
+				fila = (int) (Math.random() * superficie.getFilas());
+				columna = (int) (Math.random() * superficie.getColumnas());
 			}
-			for (int i = 0; i < this.complejas; i++) {
-				int fila = (int) (Math.random() * superficie.getFilas());
-				int columna = (int) (Math.random() * superficie.getColumnas());
+		}
+		for (int i = 0; i < this.complejas; i++) {
+			int fila = (int) (Math.random() * superficie.getFilas());
+			int columna = (int) (Math.random() * superficie.getColumnas());
 
-				while (!crearCelula(fila, columna, new CelulaCompleja())) {
-					fila = (int) (Math.random() * superficie.getFilas());
-					columna = (int) (Math.random() * superficie.getColumnas());
-				}
+			while (!crearCelula(fila, columna, new CelulaCompleja())) {
+				fila = (int) (Math.random() * superficie.getFilas());
+				columna = (int) (Math.random() * superficie.getColumnas());
 			}
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
 		}
 	}
 

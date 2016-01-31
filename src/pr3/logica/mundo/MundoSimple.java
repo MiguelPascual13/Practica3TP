@@ -26,7 +26,7 @@ public class MundoSimple extends Mundo {
 	 *             inicializacion.
 	 */
 
-	public MundoSimple(int filas, int columnas, int simples) throws ErrorDeInicializacion {
+	public MundoSimple(int filas, int columnas, int simples) throws ErrorDeInicializacion, IndicesFueraDeRango {
 		super(filas, columnas);
 		if (this.filas * this.columnas < simples)
 			throw new ErrorDeInicializacion();
@@ -49,20 +49,16 @@ public class MundoSimple extends Mundo {
 	 * excepcion de indices fuera de rango.
 	 */
 
-	public void inicializaMundo() {
+	public void inicializaMundo() throws IndicesFueraDeRango {
 		this.vaciar();
-		try {
-			for (int i = 0; i < this.simples; i++) {
-				int fila = (int) (Math.random() * superficie.getFilas());
-				int columna = (int) (Math.random() * superficie.getColumnas());
+		for (int i = 0; i < this.simples; i++) {
+			int fila = (int) (Math.random() * superficie.getFilas());
+			int columna = (int) (Math.random() * superficie.getColumnas());
 
-				while (!crearCelula(fila, columna, new CelulaSimple())) {
-					fila = (int) (Math.random() * superficie.getFilas());
-					columna = (int) (Math.random() * superficie.getColumnas());
-				}
+			while (!crearCelula(fila, columna, new CelulaSimple())) {
+				fila = (int) (Math.random() * superficie.getFilas());
+				columna = (int) (Math.random() * superficie.getColumnas());
 			}
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
 		}
 	}
 

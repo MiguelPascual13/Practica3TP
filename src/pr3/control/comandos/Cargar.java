@@ -1,6 +1,12 @@
 package pr3.control.comandos;
 
+import java.io.FileNotFoundException;
+
 import pr3.control.Controlador;
+import pr3.excepciones.FormatoNumericoIncorrecto;
+import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PalabraIncorrecta;
+import pr3.excepciones.PosicionNoVacia;
 
 /**
  * 
@@ -15,7 +21,8 @@ public class Cargar implements Comando {
 	/**
 	 * Carga el mundo deseado en el controlador.
 	 */
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador) throws FileNotFoundException, PalabraIncorrecta, IndicesFueraDeRango,
+			FormatoNumericoIncorrecto, PosicionNoVacia {
 		System.out.println("Cargando...");
 		controlador.cargar(this.nombreFichero);
 	}

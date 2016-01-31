@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import pr3.excepciones.FormatoNumericoIncorrecto;
+import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.Casilla;
 import pr3.logica.Superficie;
 
@@ -27,8 +28,7 @@ public interface Celula {
 	 *             en el formato correcto.
 	 */
 
-	public abstract void cargar(String[] cadenaLinea)
-			throws FormatoNumericoIncorrecto;
+	public abstract void cargar(String[] cadenaLinea) throws FormatoNumericoIncorrecto;
 
 	/**
 	 * Se encarga de guardar en el fichero la informacion relacionada con las
@@ -53,8 +53,7 @@ public interface Celula {
 	 * @return Devuelve la casilla de destino.
 	 */
 
-	public abstract Casilla ejecutaMovimiento(Casilla casilla,
-			Superficie superficie);
+	public abstract Casilla ejecutaMovimiento(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango;
 
 	/**
 	 * @return Devuelve la "comestibilidad" de la celula.

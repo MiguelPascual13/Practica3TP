@@ -54,8 +54,7 @@ public class CelulaCompleja implements Celula {
 	 */
 
 	public void guardar(FileWriter fich) throws IOException {
-		fich.write("compleja " + this.celulasComidas
-				+ System.getProperty("line.separator"));
+		fich.write("compleja " + this.celulasComidas + System.getProperty("line.separator"));
 	}
 
 	public boolean esComestible() {
@@ -67,43 +66,37 @@ public class CelulaCompleja implements Celula {
 	 * una casilla origen por parametro y si se puede mover se mueve.
 	 */
 
-	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) {
+	public Casilla ejecutaMovimiento(Casilla origen, Superficie superficie) throws IndicesFueraDeRango {
 		Casilla destino = null;
 		boolean come = false;
 		boolean explota = false;
 		boolean mueve = false;
-		try {
-			int fila = (int) (Math.random() * superficie.getFilas());
-			int columna = (int) (Math.random() * superficie.getColumnas());
-			if (mueve = superficie.esVacia(fila, columna)) {
+		int fila = (int) (Math.random() * superficie.getFilas());
+		int columna = (int) (Math.random() * superficie.getColumnas());
+		if (mueve = superficie.esVacia(fila, columna)) {
+			destino = new Casilla(fila, columna);
+			this.movimiento(origen, destino, superficie);
+		} else {
+			if (come = superficie.getComestibilidad(fila, columna)) {
 				destino = new Casilla(fila, columna);
 				this.movimiento(origen, destino, superficie);
-			} else {
-				if (come = superficie.getComestibilidad(fila, columna)) {
-					destino = new Casilla(fila, columna);
-					this.movimiento(origen, destino, superficie);
-					mueve = true;
-					this.aumentarComidas();
-				}
-				if ((explota = this.celulasComidas >= MAX_COMIDAS) && mueve) {
-					this.muerte(destino, superficie);
-				}
+				mueve = true;
+				this.aumentarComidas();
 			}
-			this.mensajes(origen, destino, come, explota, mueve);
-		} catch (IndicesFueraDeRango e) {
-			System.out.println(e);
+			if ((explota = this.celulasComidas >= MAX_COMIDAS) && mueve) {
+				this.muerte(destino, superficie);
+			}
 		}
+		this.mensajes(origen, destino, come, explota, mueve);
 		return destino;
 	}
 
-	private void movimiento(Casilla origen, Casilla destino,
-			Superficie superficie) throws IndicesFueraDeRango {
+	private void movimiento(Casilla origen, Casilla destino, Superficie superficie) throws IndicesFueraDeRango {
 		superficie.setCasilla(destino, this);
 		superficie.vaciarCasilla(origen);
 	}
 
-	private void muerte(Casilla casilla, Superficie superficie)
-			throws IndicesFueraDeRango {
+	private void muerte(Casilla casilla, Superficie superficie) throws IndicesFueraDeRango {
 		superficie.vaciarCasilla(casilla);
 	}
 
@@ -111,8 +104,7 @@ public class CelulaCompleja implements Celula {
 		this.celulasComidas++;
 	}
 
-	private void mensajes(Casilla origen, Casilla destino, boolean come,
-			boolean explota, boolean mueve) {
+	private void mensajes(Casilla origen, Casilla destino, boolean come, boolean explota, boolean mueve) {
 		if (mueve) {
 			System.out.println("COMPLEJA de " + origen + " a " + destino);
 			if (come) {

@@ -1,7 +1,16 @@
 package pr3.control.comandos;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import pr3.control.Controlador;
 import pr3.excepciones.ErrorComando;
+import pr3.excepciones.ErrorDeInicializacion;
+import pr3.excepciones.FormatoNumericoIncorrecto;
+import pr3.excepciones.IndicesFueraDeRango;
+import pr3.excepciones.PalabraIncorrecta;
+import pr3.excepciones.PosicionNoVacia;
+import pr3.excepciones.PosicionVacia;
 
 /**
  * Clase abstracta de la que derivarán tantas clases hijas como comandos haya.
@@ -16,7 +25,9 @@ public interface Comando {
 	 *            Controlador sobre el que se ejecutara el comando.
 	 */
 
-	public abstract void ejecuta(Controlador controlador);
+	public abstract void ejecuta(Controlador controlador)
+			throws IndicesFueraDeRango, PosicionNoVacia, FormatoNumericoIncorrecto, PosicionVacia,
+			ErrorDeInicializacion, IOException, FileNotFoundException, PalabraIncorrecta;
 
 	/**
 	 * Comprueba si un array de strings se refiere al comando concreto.

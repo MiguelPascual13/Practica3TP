@@ -35,7 +35,8 @@ public class CrearCelula implements Comando {
 	 * complejidad se crea una celula en un mundo simple o en un mundo complejo.
 	 */
 
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador)
+			throws IndicesFueraDeRango, PosicionNoVacia, FormatoNumericoIncorrecto {
 		System.out.println("Creando celula...");
 		if (controlador.getComplejidad())
 			this.ejecutaSimple(controlador);
@@ -67,45 +68,30 @@ public class CrearCelula implements Comando {
 		return "CREARCELULA f c:\tCrea una nueva Celula en la casilla especificada por parametro.\n";
 	}
 
-	private void ejecutaComplejo(Controlador controlador) {
+	private void ejecutaComplejo(Controlador controlador)
+			throws IndicesFueraDeRango, FormatoNumericoIncorrecto, PosicionNoVacia {
 		Celula celula = null;
 		String caracteristica = null;
-		try {
-			if (controlador.crearCelula() == 1) {
-				celula = new CelulaCompleja();
-				caracteristica = "compleja";
-			} else {
-				celula = new CelulaSimple();
-				caracteristica = "simple";
-			}
-			Casilla casilla = new Casilla(this.fila, this.columna);
-			controlador.crearCelula(casilla, celula);
-			System.out.println("Creando celula " + caracteristica + " en "
-					+ casilla + "...");
-		} catch (IndicesFueraDeRango e1) {
-			System.out.println(e1);
-		} catch (FormatoNumericoIncorrecto e2) {
-			System.out.println(e2);
-		} catch (PosicionNoVacia e3) {
-			System.out.println(e3);
+		if (controlador.crearCelula() == 1) {
+			celula = new CelulaCompleja();
+			caracteristica = "compleja";
+		} else {
+			celula = new CelulaSimple();
+			caracteristica = "simple";
 		}
+		Casilla casilla = new Casilla(this.fila, this.columna);
+		controlador.crearCelula(casilla, celula);
+		System.out.println("Creando celula " + caracteristica + " en " + casilla + "...");
 	}
 
-	private void ejecutaSimple(Controlador controlador) {
-		try {
-			Celula celula = new CelulaSimple();
-			Casilla casilla = new Casilla(this.fila, this.columna);
-			controlador.crearCelula(casilla, celula);
-			System.out.println("Creando celula simple en " + casilla + "...");
-		} catch (IndicesFueraDeRango e1) {
-			System.out.println(e1);
-		} catch (PosicionNoVacia e2) {
-			System.out.println(e2);
-		}
+	private void ejecutaSimple(Controlador controlador) throws IndicesFueraDeRango, PosicionNoVacia {
+		Celula celula = new CelulaSimple();
+		Casilla casilla = new Casilla(this.fila, this.columna);
+		controlador.crearCelula(casilla, celula);
+		System.out.println("Creando celula simple en " + casilla + "...");
 	}
 
-	private void parseaParametros(String[] cadenaComando)
-			throws FormatoNumericoIncorrecto {
+	private void parseaParametros(String[] cadenaComando) throws FormatoNumericoIncorrecto {
 		try {
 			this.fila = Integer.parseInt(cadenaComando[1]);
 			this.columna = Integer.parseInt(cadenaComando[2]);

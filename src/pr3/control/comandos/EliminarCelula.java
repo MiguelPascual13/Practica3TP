@@ -31,17 +31,11 @@ public class EliminarCelula implements Comando {
 	 * especificada.
 	 */
 
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador) throws IndicesFueraDeRango, PosicionVacia {
 		System.out.println("Eliminando celula...");
 		Casilla casilla = new Casilla(this.fila, this.columna);
-		try {
-			controlador.eliminarCelula(casilla);
-			System.out.println("Eliminando la celula de " + casilla + "...");
-		} catch (IndicesFueraDeRango e1) {
-			System.out.println(e1);
-		} catch (PosicionVacia e2) {
-			System.out.println(e2);
-		}
+		controlador.eliminarCelula(casilla);
+		System.out.println("Eliminando la celula de " + casilla + "...");
 	}
 
 	/**
@@ -68,8 +62,7 @@ public class EliminarCelula implements Comando {
 		return "ELIMINARCELULA f c:\tElimina la Celula de la casilla especificada por parametro.\n";
 	}
 
-	private void parseaParametros(String[] cadenaComando)
-			throws FormatoNumericoIncorrecto {
+	private void parseaParametros(String[] cadenaComando) throws FormatoNumericoIncorrecto {
 		try {
 			this.fila = Integer.parseInt(cadenaComando[1]);
 			this.columna = Integer.parseInt(cadenaComando[2]);

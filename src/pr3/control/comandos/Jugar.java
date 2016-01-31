@@ -4,6 +4,7 @@ import pr3.control.Controlador;
 import pr3.excepciones.ErrorComando;
 import pr3.excepciones.ErrorDeInicializacion;
 import pr3.excepciones.FormatoNumericoIncorrecto;
+import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.mundo.Mundo;
 import pr3.logica.mundo.MundoComplejo;
 import pr3.logica.mundo.MundoSimple;
@@ -32,19 +33,13 @@ public class Jugar implements Comando {
 	 * Ejecuta el comando jugar mediante la clase controlador.
 	 */
 
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador) throws IndicesFueraDeRango, ErrorDeInicializacion {
 		System.out.println("Creando el nuevo mundo...");
-		try {
-			if (this.complejas != -1)
-				this.mundo = new MundoComplejo(this.filas, this.columnas,
-						this.simples, this.complejas);
-			else
-				this.mundo = new MundoSimple(this.filas, this.columnas,
-						this.simples);
-			controlador.juega(this.mundo);
-		} catch (ErrorDeInicializacion e) {
-			System.out.println(e);
-		}
+		if (this.complejas != -1)
+			this.mundo = new MundoComplejo(this.filas, this.columnas, this.simples, this.complejas);
+		else
+			this.mundo = new MundoSimple(this.filas, this.columnas, this.simples);
+		controlador.juega(this.mundo);
 	}
 
 	/**
@@ -59,8 +54,7 @@ public class Jugar implements Comando {
 					if (cadenaComando[1].equalsIgnoreCase("SIMPLE")) {
 						this.parseaParametrosSimple(cadenaComando);
 						comando = this;
-					} else if (cadenaComando[1].equalsIgnoreCase("COMPLEJO")
-							&& cadenaComando.length >= 6) {
+					} else if (cadenaComando[1].equalsIgnoreCase("COMPLEJO") && cadenaComando.length >= 6) {
 						this.parseaParametrosComplejo(cadenaComando);
 						comando = this;
 					}
@@ -77,8 +71,7 @@ public class Jugar implements Comando {
 		return "JUGAR:\t\t\tComienza la simulacion.\n";
 	}
 
-	private void parseaParametrosSimple(String[] cadenaComando)
-			throws FormatoNumericoIncorrecto {
+	private void parseaParametrosSimple(String[] cadenaComando) throws FormatoNumericoIncorrecto {
 		try {
 			this.filas = Integer.parseInt(cadenaComando[2]);
 			this.columnas = Integer.parseInt(cadenaComando[3]);
@@ -91,15 +84,13 @@ public class Jugar implements Comando {
 		}
 	}
 
-	private void parseaParametrosComplejo(String[] cadenaComando)
-			throws FormatoNumericoIncorrecto {
+	private void parseaParametrosComplejo(String[] cadenaComando) throws FormatoNumericoIncorrecto {
 		try {
 			this.filas = Integer.parseInt(cadenaComando[2]);
 			this.columnas = Integer.parseInt(cadenaComando[3]);
 			this.simples = Integer.parseInt(cadenaComando[4]);
 			this.complejas = Integer.parseInt(cadenaComando[5]);
-			if (this.filas <= 0 || this.columnas <= 0 || this.simples < 0
-					|| this.complejas < 0)
+			if (this.filas <= 0 || this.columnas <= 0 || this.simples < 0 || this.complejas < 0)
 				throw new FormatoNumericoIncorrecto();
 		} catch (Exception e) {
 			throw new FormatoNumericoIncorrecto();

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import pr3.control.Controlador;
 import pr3.excepciones.ErrorDeInicializacion;
+import pr3.excepciones.IndicesFueraDeRango;
 import pr3.logica.mundo.MundoSimple;
 
 /**
@@ -28,8 +29,10 @@ public class Main {
 			Scanner in = new Scanner(System.in);
 			Controlador control = new Controlador(mundo, in);
 			control.realizaSilulacion();
-		} catch (ErrorDeInicializacion e) {
-			System.out.println(e);
+		} catch (ErrorDeInicializacion e1) {
+			System.out.println(e1);
+		} catch (IndicesFueraDeRango e2) {
+			System.out.println(e2);
 		}
 	}
 }

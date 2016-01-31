@@ -1,6 +1,7 @@
 package pr3.control.comandos;
 
 import pr3.control.Controlador;
+import pr3.excepciones.IndicesFueraDeRango;
 
 public class Iniciar implements Comando {
 
@@ -9,7 +10,7 @@ public class Iniciar implements Comando {
 	 * tablero.
 	 */
 
-	public void ejecuta(Controlador controlador) {
+	public void ejecuta(Controlador controlador) throws IndicesFueraDeRango {
 		System.out.println("Inicializando mundo...");
 		controlador.inicializar();
 	}
